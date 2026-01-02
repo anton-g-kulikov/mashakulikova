@@ -71,7 +71,7 @@ export const Home: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              📊 Август 2025
+              🎞️ Август 2025
             </a>
           </li>
         </ul>

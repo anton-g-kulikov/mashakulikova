@@ -237,11 +237,12 @@
 
 ## UI Test Cases
 
-| Test Case ID | Description                                                  | Type        | Status      |
-| :----------- | :----------------------------------------------------------- | :---------- | :---------- |
-| UI-INT-001   | Page allows vertical scroll while game remains usable        | Integration | Not Started |
-| UI-INT-002   | Horizontal overflow stays hidden after layout change         | Integration | Not Started |
-| UI-INT-003   | Tap-to-select interactions still work with scrolling enabled | Integration | Not Started |
+| Test Case ID | Description                                                           | Type        | Status      |
+| :----------- | :-------------------------------------------------------------------- | :---------- | :---------- |
+| UI-INT-001   | Page allows vertical scroll while game remains usable                 | Integration | Not Started |
+| UI-INT-002   | Horizontal overflow stays hidden after layout change                  | Integration | Not Started |
+| UI-INT-003   | Tap-to-select interactions still work with scrolling enabled          | Integration | Not Started |
+| UI-INT-004   | August 2025 presentation shows "На главную" link that returns to home | Integration | Not Started |
 
 ## Test Coverage Goals
 

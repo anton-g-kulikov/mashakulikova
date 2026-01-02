@@ -42,6 +42,7 @@
 ## UI & Layout
 
 - [x] **UI-TASK-001: Restore page scroll while keeping drag/tap playable** - ✅ **COMPLETED** - Allow vertical page scrolling again (after drag controls removal) while preserving game usability; prevent horizontal overflow
+- [x] **UI-TASK-002: Add home nav to August 2025 presentation** - ✅ **COMPLETED** - Add a fixed "На главную" navigation link to the August 2025 presentation for returning to the main page
 
 ## Project Structure & Navigation
 
