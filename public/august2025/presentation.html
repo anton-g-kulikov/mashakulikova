@@ -1,632 +1,739 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Маша и папа, Август 2025</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        overflow-x: hidden;
+        color: #333;
+        padding: 2rem 0;
+      }
+
+      .presentation-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .title-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        z-index: 1000;
+        transition: opacity 1s ease-out, transform 1s ease-out;
+      }
+
+      .title-screen.hidden {
+        opacity: 0;
+        transform: translateY(-100%);
+        pointer-events: none;
+      }
+
+      .title-screen h1 {
+        font-size: 4rem;
+        font-weight: 300;
+        margin-bottom: 1rem;
+        text-align: center;
+        animation: fadeInUp 1s ease-out;
+      }
+
+      .title-screen p {
+        font-size: 1.5rem;
+        opacity: 0.8;
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease-out 0.3s both;
+      }
+
+      .start-button {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid white;
+        color: white;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        animation: fadeInUp 1s ease-out 0.6s both;
+      }
+
+      .start-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .slides-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .slide {
+        min-width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 2rem;
+      }
+
+      .polaroid {
+        background: white;
+        padding: 1rem;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        transform: rotate(-2deg);
+        transition: all 0.8s ease-out;
+        max-width: 500px;
+        border-radius: 5px;
+        margin-bottom: 2rem;
+      }
+
+      .slide:nth-child(even) .polaroid {
+        transform: rotate(1.5deg);
+      }
+
+      .slide.active .polaroid {
+        transform: rotate(0deg) scale(1.05);
+      }
+
+      .polaroid-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-bottom: 1rem;
+      }
+
+      .polaroid-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        font-family: "Courier New", monospace;
+      }
+
+      .polaroid-date {
+        font-size: 0.9rem;
+        color: #666;
+        text-align: center;
+        font-family: "Courier New", monospace;
+      }
+
+      .slide-description {
+        text-align: center;
+        max-width: 600px;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(50px);
+        opacity: 0;
+        transition: all 0.8s ease-out 0.3s;
+      }
+
+      .slide.active .slide-description {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .slide-description p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #555;
+        margin: 0;
+      }
+
+      .slide-number {
+        font-size: 1.1rem;
+        color: #333;
+        font-weight: 600;
+        font-family: "Courier New", monospace;
+        white-space: nowrap;
+      }
+
+      .top-right-nav {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 0.5rem 1.2rem;
+        border-radius: 30px;
+        backdrop-filter: blur(10px);
+        z-index: 1002;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .top-right-nav.visible {
+        opacity: 1;
+      }
+
+      .navigation {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 1rem;
+        z-index: 100;
+      }
+
+      .nav-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        color: #333;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-button:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .nav-button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      .dots-navigation {
+        display: flex;
+        gap: 0.4rem;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .dot.active {
+        background: #333;
+        transform: scale(1.2);
+      }
+
+      .birthday-slide {
+        background: linear-gradient(
+          45deg,
+          #ff6b6b,
+          #ffd93d,
+          #6bcf7f,
+          #4d9de0,
+          #9b59b6
+        );
+        background-size: 300% 300%;
+        animation: gradientShift 3s ease infinite;
+      }
+
+      .birthday-slide .polaroid {
+        border: 3px solid gold;
+        box-shadow: 0 8px 40px rgba(255, 215, 0, 0.6);
+        background: linear-gradient(135deg, #fff 0%, #fffacd 100%);
+      }
+
+      .birthday-slide .polaroid-title {
+        color: #d4af37;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        font-size: 1.5rem;
+      }
+
+      .birthday-slide .slide-description {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(255, 250, 205, 0.95) 100%
+        );
+        border: 2px solid gold;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            overflow-x: hidden;
-            color: #333;
-            padding: 2rem 0;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        .presentation-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
         }
-
-        .title-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            z-index: 1000;
-            transition: opacity 1s ease-out, transform 1s ease-out;
+        50% {
+          background-position: 100% 50%;
         }
-
-        .title-screen.hidden {
-            opacity: 0;
-            transform: translateY(-100%);
-            pointer-events: none;
+        100% {
+          background-position: 0% 50%;
         }
+      }
 
-        .title-screen h1 {
-            font-size: 4rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
-            text-align: center;
-            animation: fadeInUp 1s ease-out;
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #ffd93d, #ff6b6b);
+        transition: width 0.6s ease;
+        z-index: 1001;
+      }
+
+      @media (max-width: 768px) {
+        .top-right-nav {
+          top: 1rem;
+          right: 1rem;
+          padding: 0.4rem 0.8rem;
+          gap: 0.6rem;
         }
-
-        .title-screen p {
-            font-size: 1.5rem;
-            opacity: 0.8;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        .start-button {
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            animation: fadeInUp 1s ease-out 0.6s both;
-        }
-
-        .start-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .slides-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
-
-        .slide {
-            min-width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 2rem;
-        }
-
-        .polaroid {
-            background: white;
-            padding: 1rem;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            transform: rotate(-2deg);
-            transition: all 0.8s ease-out;
-            max-width: 500px;
-            border-radius: 5px;
-            margin-bottom: 2rem;
-        }
-
-        .slide:nth-child(even) .polaroid {
-            transform: rotate(1.5deg);
-        }
-
-        .slide.active .polaroid {
-            transform: rotate(0deg) scale(1.05);
-        }
-
-        .polaroid-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 3px;
-            margin-bottom: 1rem;
-        }
-
-        .polaroid-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #333;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            font-family: 'Courier New', monospace;
-        }
-
-        .polaroid-date {
-            font-size: 0.9rem;
-            color: #666;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-        }
-
-        .slide-description {
-            text-align: center;
-            max-width: 600px;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transform: translateY(50px);
-            opacity: 0;
-            transition: all 0.8s ease-out 0.3s;
-        }
-
-        .slide.active .slide-description {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .slide-description p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #555;
-            margin: 0;
-        }
-
-
-
-        .slide-number {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            font-size: 1.2rem;
-            color: #666;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            z-index: 3;
-        }
-
-        .navigation {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 1rem;
-            z-index: 100;
-        }
-
-        .nav-button {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid rgba(0, 0, 0, 0.2);
-            color: #333;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-button:hover {
-            background: rgba(255, 255, 255, 1);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .nav-button:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
         .dots-navigation {
-            position: fixed;
-            bottom: 8rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.5rem;
-            z-index: 100;
+          gap: 0.3rem;
         }
-
         .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
+          width: 8px;
+          height: 8px;
         }
-
-        .dot.active {
-            background: #333;
-            transform: scale(1.2);
+        .slide-number {
+          font-size: 0.9rem;
         }
-
-        .birthday-slide {
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4d9de0, #9b59b6);
-            background-size: 300% 300%;
-            animation: gradientShift 3s ease infinite;
+        .title-screen h1 {
+          font-size: 2.5rem;
         }
-
-        .birthday-slide .polaroid {
-            border: 3px solid gold;
-            box-shadow: 0 8px 40px rgba(255, 215, 0, 0.6);
-            background: linear-gradient(135deg, #fff 0%, #fffacd 100%);
+        .slide h2 {
+          font-size: 2rem;
         }
-
-        .birthday-slide .polaroid-title {
-            color: #d4af37;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            font-size: 1.5rem;
+        .slide p {
+          font-size: 1.1rem;
         }
-
-        .birthday-slide .slide-description {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 250, 205, 0.95) 100%);
-            border: 2px solid gold;
+        .slide-content {
+          padding: 1rem;
+          margin: 1rem;
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ffd93d, #ff6b6b);
-            transition: width 0.6s ease;
-            z-index: 1001;
-        }
-
-        @media (max-width: 768px) {
-            .title-screen h1 {
-                font-size: 2.5rem;
-            }
-            .slide h2 {
-                font-size: 2rem;
-            }
-            .slide p {
-                font-size: 1.1rem;
-            }
-            .slide-content {
-                padding: 1rem;
-                margin: 1rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="presentation-container">
-        <div class="progress-bar" id="progressBar"></div>
-        
-        <div class="title-screen" id="titleScreen">
-            <h1>Маша и папа</h1>
-            <p>Август 2025 • Наши приключения</p>
-            <button class="start-button" onclick="startPresentation()">Начать путешествие</button>
+      <div class="progress-bar" id="progressBar"></div>
+
+      <div class="title-screen" id="titleScreen">
+        <h1>Маша и папа</h1>
+        <p>Август 2025 • Наши приключения</p>
+        <button class="start-button" onclick="startPresentation()">
+          Начать путешествие
+        </button>
+      </div>
+
+      <div class="slides-container" id="slidesContainer">
+        <!-- Слайд 1: Лахта центр -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Лахта-центр.jpg"
+              alt="Лахта центр"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Лахта центр</div>
+            <div class="polaroid-date">31 июля 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>
+              Начало нашего путешествия у самого высокого здания в Европе. 462
+              метра вверх к облакам!
+            </p>
+          </div>
         </div>
 
-        <div class="slides-container" id="slidesContainer">
-            <!-- Слайд 1: Лахта центр -->
-            <div class="slide">
-                <div class="slide-number">1 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Лахта центр.jpg" alt="Лахта центр" class="polaroid-image">
-                    <div class="polaroid-title">Лахта центр</div>
-                    <div class="polaroid-date">25 июля 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Начало нашего путешествия у самого высокого здания в Европе. 462 метра вверх к облакам!</p>
-                </div>
-            </div>
-
-            <!-- Слайд 2: Высотный город -->
-            <div class="slide">
-                <div class="slide-number">2 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Высотный город.png" alt="Высотный город" class="polaroid-image">
-                    <div class="polaroid-title">Высотный город</div>
-                    <div class="polaroid-date">26 июля 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Современная архитектура Петербурга. Город растёт ввысь, а мы растём вместе с ним.</p>
-                </div>
-            </div>
-
-            <!-- Слайд 3: АвенюАпарт -->
-            <div class="slide">
-                <div class="slide-number">3 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/АвенюАпарт.jpg" alt="АвенюАпарт" class="polaroid-image">
-                    <div class="polaroid-title">АвенюАпарт</div>
-                    <div class="polaroid-date">27 июля 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Уютные места города, где каждый день начинается с новых открытий.</p>
-                </div>
-            </div>
-
-            <!-- Слайд 4: Аптаун -->
-            <div class="slide">
-                <div class="slide-number">4 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Аптаун.jpg" alt="Аптаун" class="polaroid-image">
-                    <div class="polaroid-title">Аптаун</div>
-                    <div class="polaroid-date">28 июля 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Торговые центры и места встреч. Здесь мы выбирали подарки и делились мечтами.</p>
-                </div>
-            </div>
-
-            <!-- Слайд 5: Редакция -->
-            <div class="slide">
-                <div class="slide-number">5 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Редакция.jpg" alt="Редакция" class="polaroid-image">
-                    <div class="polaroid-title">Редакция</div>
-                    <div class="polaroid-date">30 июля 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Место, где рождаются истории. И наша история тоже здесь началась.</p>
-                </div>
-            </div>
-
-            <!-- Слайд 6: Севкабель -->
-            <div class="slide">
-                <div class="slide-number">6 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Севкабель.jpg" alt="Севкабель" class="polaroid-image">
-                    <div class="polaroid-title">Севкабель</div>
-                    <div class="polaroid-date">2 августа 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Креативное пространство на берегу залива. Искусство, культура и вдохновение.</p>
-                </div>
-            </div>
-
-            <!-- ЦЕНТРАЛЬНЫЙ СЛАЙД: Лодка (День рождения) -->
-            <div class="slide birthday-slide">
-                <div class="slide-number">7 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Лодка.jpeg" alt="День рождения на лодке" class="polaroid-image">
-                    <div class="polaroid-title">🎉 День рождения на воде! 🎉</div>
-                    <div class="polaroid-date">5 августа 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p><strong>Самый особенный день нашего путешествия!</strong> Катание на лодке в день рождения - это магия, которую мы запомним навсегда.</p>
-                </div>
-            </div>
-
-            <!-- Слайд 8: Василеостровский рынок -->
-            <div class="slide">
-                <div class="slide-number">8 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Василеостровский рынок.jpg" alt="Василеостровский рынок" class="polaroid-image">
-                    <div class="polaroid-title">Василеостровский рынок</div>
-                    <div class="polaroid-date">6 августа 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Вкусы и ароматы города. Здесь мы пробовали самые свежие продукты и наслаждались атмосферой.</p>
-                </div>
-            </div>
-
-            <!-- Слайд 9: Гранд Макет -->
-            <div class="slide">
-                <div class="slide-number">9 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Гранд Макет.jpg" alt="Гранд Макет" class="polaroid-image">
-                    <div class="polaroid-title">Гранд Макет</div>
-                    <div class="polaroid-date">7 августа 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Вся Россия в миниатюре! Путешествие от Калининграда до Владивостока за один день.</p>
-                </div>
-            </div>
-
-            <!-- Слайд 10: Аквапарк Питерлэнд -->
-            <div class="slide">
-                <div class="slide-number">10 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Аквапарк Питерлэнд.jpg" alt="Аквапарк Питерлэнд" class="polaroid-image">
-                    <div class="polaroid-title">Аквапарк Питерлэнд</div>
-                    <div class="polaroid-date">9 августа 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Водные развлечения и смех до слёз! Горки, бассейны и незабываемые моменты веселья.</p>
-                </div>
-            </div>
-
-            <!-- Слайд 11: Вяземский сад -->
-            <div class="slide">
-                <div class="slide-number">11 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Вяземский сад.jpg" alt="Вяземский сад" class="polaroid-image">
-                    <div class="polaroid-title">Вяземский сад</div>
-                    <div class="polaroid-date">11 августа 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Тихие прогулки среди зелени. Место для разговоров по душам и наблюдения за природой.</p>
-                </div>
-            </div>
-
-            <!-- Слайд 12: Лопухинский сад -->
-            <div class="slide">
-                <div class="slide-number">12 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Лопухинский сад.jpg" alt="Лопухинский сад" class="polaroid-image">
-                    <div class="polaroid-title">Лопухинский сад</div>
-                    <div class="polaroid-date">13 августа 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Ещё один оазис спокойствия в городе. Каждый парк имеет свою особую атмосферу.</p>
-                </div>
-            </div>
-
-            <!-- Слайд 13: Лендуновская роща -->
-            <div class="slide">
-                <div class="slide-number">13 / 13</div>
-                <div class="polaroid">
-                    <img src="imgs/Лендуновская роща.jpg" alt="Лендуновская роща" class="polaroid-image">
-                    <div class="polaroid-title">Лендуновская роща</div>
-                    <div class="polaroid-date">4 августа 2025</div>
-                </div>
-                <div class="slide-description">
-                    <p>Завершение нашего путешествия в объятиях природы. 11 дней, 13 мест, бесценные воспоминания.</p>
-                </div>
-            </div>
+        <!-- Слайд 2: Высотный город -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Высотный_город.png"
+              alt="Высотный город"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Высотный город</div>
+            <div class="polaroid-date">1 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>Сразу покоряем новые высоты! В том числе – стрельбы из лука!</p>
+          </div>
         </div>
 
-        <div class="navigation">
-            <button class="nav-button" id="prevBtn" onclick="previousSlide()">←</button>
-            <button class="nav-button" id="nextBtn" onclick="nextSlide()">→</button>
+        <!-- Слайд 3: АвенюАпарт -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Авеню-Апарт.jpg"
+              alt="АвенюАпарт"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Авеню-Апарт отель</div>
+            <div class="polaroid-date">2 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>Сюда мы возвращались каждый день.</p>
+          </div>
         </div>
 
+        <!-- Слайд 4: Редакция -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Редакция.jpg"
+              alt="Редакция"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Редакция</div>
+            <div class="polaroid-date">3 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>Место, где рождаются истории. И работает мама :).</p>
+          </div>
+        </div>
+
+        <!-- Слайд 5: Севкабель -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Севкабель.jpg"
+              alt="Севкабель"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Севкабель</div>
+            <div class="polaroid-date">4 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>
+              Креативное пространство на берегу залива. Искусство, культура и
+              вдохновение.
+            </p>
+          </div>
+        </div>
+
+        <!-- Слайд 6: Лодка (День рождения) -->
+        <div class="slide birthday-slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Лодка.jpeg"
+              alt="День рождения на лодке"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">🎉 День рождения на воде! 🎉</div>
+            <div class="polaroid-date">5 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>
+              <strong>Самый особенный день нашего путешествия!</strong> Катание
+              на лодке в день рождения - это магия, которую мы запомним
+              навсегда.
+            </p>
+          </div>
+        </div>
+
+        <!-- Слайд 7: Василеостровский рынок -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Василеостровский_рынок.jpg"
+              alt="Василеостровский рынок"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Василеостровский рынок</div>
+            <div class="polaroid-date">6 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>
+              Вкусы и ароматы города. Здесь мы пробовали самое необычное
+              мороженное!
+            </p>
+          </div>
+        </div>
+
+        <!-- Слайд 8: Гранд Макет -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Гранд-Макет.jpg"
+              alt="Гранд Макет"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Гранд Макет</div>
+            <div class="polaroid-date">7 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>
+              Вся Россия в миниатюре! Путешествие от Калининграда до
+              Владивостока за один день.
+            </p>
+          </div>
+        </div>
+
+        <!-- Слайд 9: Аквапарк Питерлэнд -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Аквапарк Питерлэнд.jpg"
+              alt="Аквапарк Питерлэнд"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Аквапарк Питерлэнд</div>
+            <div class="polaroid-date">8 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>
+              Водные развлечения и смех до слёз! Горки, бассейны и незабываемые
+              моменты веселья.
+            </p>
+          </div>
+        </div>
+
+        <!-- Слайд 10: Вяземский сад -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Вяземский_сад.jpg"
+              alt="Вяземский сад"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Вяземский сад</div>
+            <div class="polaroid-date">9 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>
+              Тихие прогулки среди зелени. Место для разговоров по душам и
+              наблюдения за природой.
+            </p>
+          </div>
+        </div>
+
+        <!-- Слайд 11: Лопухинский сад -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Лопухинский_сад.jpg"
+              alt="Лопухинский сад"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Лопухинский сад</div>
+            <div class="polaroid-date">10 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>
+              Ещё один оазис спокойствия в городе. Каждый парк имеет свою особую
+              атмосферу.
+            </p>
+          </div>
+        </div>
+
+        <!-- Слайд 12: Лендуновская роща -->
+        <div class="slide">
+          <div class="polaroid">
+            <img
+              src="imgs/Лендуновская_роща.jpg"
+              alt="Лендуновская роща"
+              class="polaroid-image"
+            />
+            <div class="polaroid-title">Лендуновская роща</div>
+            <div class="polaroid-date">11 августа 2025</div>
+          </div>
+          <div class="slide-description">
+            <p>
+              Завершение нашего путешествия в объятиях природы. 11 дней, 12
+              мест, бесценные воспоминания.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="top-right-nav" id="topRightNav">
         <div class="dots-navigation" id="dotsNavigation"></div>
+        <div class="slide-number" id="slideNumber"></div>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="previousSlide()">
+          ←
+        </button>
+        <button class="nav-button" id="nextBtn" onclick="nextSlide()">→</button>
+      </div>
     </div>
 
     <script>
-        let currentSlide = 0;
-        const totalSlides = 13;
-        let presentationStarted = false;
+      let currentSlide = 0;
+      const totalSlides = 12;
+      let presentationStarted = false;
 
-        function startPresentation() {
-            document.getElementById('titleScreen').classList.add('hidden');
-            presentationStarted = true;
-            setTimeout(() => {
-                showSlide(0);
-            }, 1000);
+      function startPresentation() {
+        document.getElementById("titleScreen").classList.add("hidden");
+        document.getElementById("topRightNav").classList.add("visible");
+        presentationStarted = true;
+        setTimeout(() => {
+          showSlide(0);
+        }, 1000);
+      }
+
+      function createDots() {
+        const dotsContainer = document.getElementById("dotsNavigation");
+        for (let i = 0; i < totalSlides; i++) {
+          const dot = document.createElement("div");
+          dot.className = "dot";
+          if (i === 0) dot.classList.add("active");
+          dot.onclick = () => goToSlide(i);
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      function updateProgressBar() {
+        const progressBar = document.getElementById("progressBar");
+        const progress = ((currentSlide + 1) / totalSlides) * 100;
+        progressBar.style.width = progress + "%";
+      }
+
+      function showSlide(n) {
+        if (!presentationStarted) return;
+
+        const slides = document.querySelectorAll(".slide");
+        const dots = document.querySelectorAll(".dot");
+        const slidesContainer = document.getElementById("slidesContainer");
+
+        // Remove active class from all slides and dots
+        slides.forEach((slide) => slide.classList.remove("active"));
+        dots.forEach((dot) => dot.classList.remove("active"));
+
+        // Set current slide
+        currentSlide = n;
+        if (currentSlide >= totalSlides) currentSlide = 0;
+        if (currentSlide < 0) currentSlide = totalSlides - 1;
+
+        // Move slides container
+        slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+        // Add active class to current slide and dot
+        setTimeout(() => {
+          slides[currentSlide].classList.add("active");
+          dots[currentSlide].classList.add("active");
+        }, 300);
+
+        // Update slide number
+        document.getElementById("slideNumber").innerText = `${
+          currentSlide + 1
+        } / ${totalSlides}`;
+
+        // Update navigation buttons
+        document.getElementById("prevBtn").disabled = currentSlide === 0;
+        document.getElementById("nextBtn").disabled =
+          currentSlide === totalSlides - 1;
+
+        updateProgressBar();
+      }
+
+      function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+          showSlide(currentSlide + 1);
+        }
+      }
+
+      function previousSlide() {
+        if (currentSlide > 0) {
+          showSlide(currentSlide - 1);
+        }
+      }
+
+      function goToSlide(n) {
+        showSlide(n);
+      }
+
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (!presentationStarted) {
+          if (e.key === "Enter" || e.key === " ") {
+            startPresentation();
+          }
+          return;
         }
 
-        function createDots() {
-            const dotsContainer = document.getElementById('dotsNavigation');
-            for (let i = 0; i < totalSlides; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot';
-                if (i === 0) dot.classList.add('active');
-                dot.onclick = () => goToSlide(i);
-                dotsContainer.appendChild(dot);
-            }
+        if (e.key === "ArrowRight") nextSlide();
+        if (e.key === "ArrowLeft") previousSlide();
+        if (e.key >= "1" && e.key <= "9") {
+          const slideNum = parseInt(e.key) - 1;
+          if (slideNum < totalSlides) goToSlide(slideNum);
         }
+      });
 
-        function updateProgressBar() {
-            const progressBar = document.getElementById('progressBar');
-            const progress = ((currentSlide + 1) / totalSlides) * 100;
-            progressBar.style.width = progress + '%';
+      // Touch/swipe navigation
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      document.addEventListener("touchstart", function (e) {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      document.addEventListener("touchend", function (e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      });
+
+      function handleSwipe() {
+        if (!presentationStarted) return;
+
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0) {
+            nextSlide(); // Swipe left - next slide
+          } else {
+            previousSlide(); // Swipe right - previous slide
+          }
         }
+      }
 
-        function showSlide(n) {
-            if (!presentationStarted) return;
-            
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            const slidesContainer = document.getElementById('slidesContainer');
-            
-            // Remove active class from all slides and dots
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-            
-            // Set current slide
-            currentSlide = n;
-            if (currentSlide >= totalSlides) currentSlide = 0;
-            if (currentSlide < 0) currentSlide = totalSlides - 1;
-            
-            // Move slides container
-            slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
-            // Add active class to current slide and dot
-            setTimeout(() => {
-                slides[currentSlide].classList.add('active');
-                dots[currentSlide].classList.add('active');
-            }, 300);
-            
-            // Update navigation buttons
-            document.getElementById('prevBtn').disabled = currentSlide === 0;
-            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            updateProgressBar();
-        }
-
-        function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
-                showSlide(currentSlide + 1);
-            }
-        }
-
-        function previousSlide() {
-            if (currentSlide > 0) {
-                showSlide(currentSlide - 1);
-            }
-        }
-
-        function goToSlide(n) {
-            showSlide(n);
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            if (!presentationStarted) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    startPresentation();
-                }
-                return;
-            }
-            
-            if (e.key === 'ArrowRight') nextSlide();
-            if (e.key === 'ArrowLeft') previousSlide();
-            if (e.key >= '1' && e.key <= '9') {
-                const slideNum = parseInt(e.key) - 1;
-                if (slideNum < totalSlides) goToSlide(slideNum);
-            }
-        });
-
-        // Touch/swipe navigation
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', function(e) {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (!presentationStarted) return;
-            
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
-            
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    nextSlide(); // Swipe left - next slide
-                } else {
-                    previousSlide(); // Swipe right - previous slide
-                }
-            }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            createDots();
-            updateProgressBar();
-        });
+      // Initialize
+      document.addEventListener("DOMContentLoaded", function () {
+        createDots();
+        updateProgressBar();
+      });
     </script>
-</body>
+  </body>
 </html>
