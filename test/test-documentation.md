@@ -8,15 +8,24 @@
 ## Test Cases
 
 ### SETUP-TEST-001: Verify project setup
+
 - **Status**: 📋 NOT STARTED
 - **Description**: Verify that metacoding setup is working correctly
 - **Expected**: All configuration files are present and valid
 - **Test File**: `test/setup.test.js`
 
 ### DOC-TEST-001: Verify README.md existence and basic content
+
 - **Status**: ✅ COMPLETED
 - **Description**: Ensure the root README.md file exists and contains essential project information
 - **Expected**: README.md exists and includes Project Name, Tech Stack, and Setup instructions
+- **Test File**: N/A (Manual/File check)
+
+### CONFIG-TEST-001: Verify .gitignore contains standard exclusions
+
+- **Status**: ✅ COMPLETED
+- **Description**: Ensure .gitignore includes build outputs, environment files, and logs
+- **Expected**: .gitignore contains dist/, .env, and log patterns
 - **Test File**: N/A (Manual/File check)
 
 ## Test Coverage Goals
