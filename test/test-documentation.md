@@ -145,8 +145,8 @@
 ### SHUFFLE-TEST-017: Visual Slot Sizing
 
 - **Status**: ✅ COMPLETED
-- **Description**: Verify that board is rendered with a connected outline
-- **Expected**: SVG contains the path element defining the board shape
+- **Description**: Verify that board is rendered with a connected outline and no gaps
+- **Expected**: SVG path defines a continuous board where 80x80 slots touch each other
 - **Test File**: N/A (Visual/Code Verification)
 
 ## Test Coverage Goals

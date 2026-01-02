@@ -53,11 +53,11 @@ describe("Touch Drag Sensitivity", () => {
   test("should trigger move when dragged 16 units (less than 20)", () => {
     render(<CoinsShuffler />);
 
-    // L2 is at (50, 150). C1 is at (150, 150).
+    // L2 is at (50, 130). C1 is at (130, 130).
     // C1 is empty initially.
-    // Dragging L2 coin by x=16 puts it at (66, 150).
-    // Distance to C1 is 150 - 66 = 84.
-    // Our threshold is 85. 84 < 85, so it should move.
+    // Dragging L2 coin by x=16 puts it at (66, 130).
+    // Distance to C1 is 130 - 66 = 64.
+    // Our threshold is 65. 64 < 65, so it should move.
 
     const coin = screen.getByTestId("coin-L2");
     (coin as any)._testOffset = { x: 16, y: 0 };
@@ -83,11 +83,11 @@ describe("Touch Drag Sensitivity", () => {
 
     render(<CoinsShuffler />);
 
-    // L2 is at (50, 150). C1 is at (150, 150).
+    // L2 is at (50, 130). C1 is at (130, 130).
     // To move L2 -> C1 (Board Right), we need to drag Screen DOWN on rotated board.
     // Since the SVG is rotated via CSS, framer-motion reports this as a Local X+ drag.
     // So we simulate offset { x: 25, y: 0 }.
-    
+
     const coin = screen.getByTestId("coin-L2");
     (coin as any)._testOffset = { x: 25, y: 0 };
 

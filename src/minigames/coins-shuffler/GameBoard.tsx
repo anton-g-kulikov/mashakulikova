@@ -12,15 +12,15 @@ interface GameBoardProps {
 
 export const SLOT_COORDS: Record<SlotId, { x: number; y: number }> = {
   L1: { x: 50, y: 50 },
-  L2: { x: 50, y: 150 },
-  L3: { x: 50, y: 250 },
-  C1: { x: 150, y: 150 },
-  C2: { x: 250, y: 150 },
-  C3: { x: 350, y: 150 },
-  R1: { x: 450, y: 50 },
-  R2: { x: 450, y: 150 },
-  R3: { x: 450, y: 250 },
-  P1: { x: 250, y: 50 },
+  L2: { x: 50, y: 130 },
+  L3: { x: 50, y: 210 },
+  C1: { x: 130, y: 130 },
+  C2: { x: 210, y: 130 },
+  C3: { x: 290, y: 130 },
+  R1: { x: 370, y: 50 },
+  R2: { x: 370, y: 130 },
+  R3: { x: 370, y: 210 },
+  P1: { x: 210, y: 50 },
 };
 
 export const GameBoard: React.FC<GameBoardProps> = ({
@@ -62,9 +62,9 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       }
     });
 
-    // Trigger movement if we are within 85 units of another slot
-    // (Since slots are 100 units apart, this means after ~15 units of drag)
-    if (nearestSlot && minDistance < 85) {
+    // Trigger movement if we are within 65 units of another slot
+    // (Since slots are 80 units apart, this means after ~15 units of drag)
+    if (nearestSlot && minDistance < 65) {
       onMove(from, nearestSlot);
     }
   };
@@ -72,8 +72,8 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   return (
     <div
       style={{
-        width: isMobile ? "350px" : "550px",
-        height: isMobile ? "550px" : "350px",
+        width: isMobile ? "260px" : "420px",
+        height: isMobile ? "420px" : "260px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -81,9 +81,9 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       }}
     >
       <svg
-        width="550"
-        height="350"
-        viewBox="0 0 550 350"
+        width="420"
+        height="260"
+        viewBox="0 0 420 260"
         style={{
           transform: isMobile ? "rotate(90deg)" : "none",
           flexShrink: 0,
@@ -91,7 +91,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       >
         {/* Board Outline */}
         <path
-          d="M 10,10 H 90 V 110 H 210 V 10 H 290 V 110 H 410 V 10 H 490 V 290 H 410 V 190 H 90 V 290 H 10 Z"
+          d="M 10,10 H 90 V 90 H 170 V 10 H 250 V 90 H 330 V 10 H 410 V 250 H 330 V 170 H 90 V 250 H 10 Z"
           fill="none"
           stroke="#fff"
           strokeWidth="2"
