@@ -170,6 +170,13 @@
 - **Expected**: Background is soft pink, text is dark purple, buttons are rounded and bright
 - **Test File**: N/A (Visual/Code Verification)
 
+### SHUFFLE-TEST-021: Multi-Level System
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify that the game supports multiple levels with different layouts and win conditions
+- **Expected**: Level selection buttons work; board renders correct number of slots and coins for each level; win condition is level-specific
+- **Test File**: `test/integration/shuffle-ui.test.tsx`, `test/unit/shuffle-logic.test.ts`
+
 ## Test Coverage Goals
 
 - Unit Tests: 80%+ coverage for critical functionality

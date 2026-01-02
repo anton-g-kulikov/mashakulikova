@@ -1,19 +1,31 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { getInitialState, moveCoin, SlotId, isValidMove } from "./logic";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { getInitialState, moveCoin } from "./logic";
 import { GameBoard } from "./GameBoard";
 import { Legend } from "./Legend";
+import { LEVELS, SlotId } from "./levels";
 
 export const CoinsShuffler: React.FC = () => {
-  const [state, setState] = useState(getInitialState());
-  const [focusedSlot, setFocusedSlot] = useState<SlotId | null>("L1");
+  const [state, setState] = useState(getInitialState(1));
+  const [focusedSlot, setFocusedSlot] = useState<SlotId | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<SlotId | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 480);
+
+  const currentLevelConfig = useMemo(
+    () => LEVELS.find((l) => l.id === state.levelId)!,
+    [state.levelId]
+  );
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 480);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Set initial focus when level changes
+  useEffect(() => {
+    setFocusedSlot(currentLevelConfig.slots[0]);
+    setSelectedSlot(null);
+  }, [currentLevelConfig]);
 
   const handleMove = useCallback(
     (from: SlotId, to: SlotId) => {
@@ -28,67 +40,71 @@ export const CoinsShuffler: React.FC = () => {
   );
 
   const handleReset = () => {
-    setState(getInitialState());
-    setFocusedSlot("L1");
+    setState(getInitialState(state.levelId));
+    setFocusedSlot(currentLevelConfig.slots[0]);
     setSelectedSlot(null);
+  };
+
+  const handleNextLevel = () => {
+    const nextId = state.levelId + 1;
+    if (nextId <= LEVELS.length) {
+      setState(getInitialState(nextId));
+    }
+  };
+
+  const handleLevelSelect = (id: number) => {
+    setState(getInitialState(id));
   };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (state.isWin) return;
 
-      const current = focusedSlot || "L1";
+      const currentId = focusedSlot || currentLevelConfig.slots[0];
       let next: SlotId | null = null;
 
       let key = e.key;
       if (isMobile) {
-        // Rotate keyboard mapping for 90deg CW rotation
-        // Screen Up -> Board Left
-        // Screen Down -> Board Right
-        // Screen Left -> Board Down
-        // Screen Right -> Board Up
         if (key === "ArrowUp") key = "ArrowLeft";
         else if (key === "ArrowDown") key = "ArrowRight";
         else if (key === "ArrowLeft") key = "ArrowDown";
         else if (key === "ArrowRight") key = "ArrowUp";
       }
 
-      switch (key) {
-        case "ArrowUp":
-          if (current === "L2") next = "L1";
-          else if (current === "L3") next = "L2";
-          else if (current === "C2") next = "P1";
-          else if (current === "R2") next = "R1";
-          else if (current === "R3") next = "R2";
-          break;
-        case "ArrowDown":
-          if (current === "L1") next = "L2";
-          else if (current === "L2") next = "L3";
-          else if (current === "P1") next = "C2";
-          else if (current === "R1") next = "R2";
-          else if (current === "R2") next = "R3";
-          break;
-        case "ArrowLeft":
-          if (current === "C1") next = "L2";
-          else if (current === "C2") next = "C1";
-          else if (current === "C3") next = "C2";
-          else if (current === "R2") next = "C3";
-          break;
-        case "ArrowRight":
-          if (current === "L2") next = "C1";
-          else if (current === "C1") next = "C2";
-          else if (current === "C2") next = "C3";
-          else if (current === "C3") next = "R2";
-          break;
-        case " ":
-        case "Enter":
-          e.preventDefault();
-          if (selectedSlot) {
-            setSelectedSlot(null);
-          } else if (state.positions[current]) {
-            setSelectedSlot(current);
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(key)) {
+        const coords = isMobile
+          ? currentLevelConfig.slotCoordsMobile
+          : currentLevelConfig.slotCoordsDesktop;
+        const current = coords[currentId];
+        let minScore = Infinity;
+
+        Object.keys(coords).forEach((id) => {
+          if (id === currentId) return;
+          const target = coords[id];
+          const dx = target.x - current.x;
+          const dy = target.y - current.y;
+
+          let match = false;
+          if (key === "ArrowUp" && dy < -10 && Math.abs(dx) < 40) match = true;
+          if (key === "ArrowDown" && dy > 10 && Math.abs(dx) < 40) match = true;
+          if (key === "ArrowLeft" && dx < -10 && Math.abs(dy) < 40) match = true;
+          if (key === "ArrowRight" && dx > 10 && Math.abs(dy) < 40) match = true;
+
+          if (match) {
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < minScore) {
+              minScore = dist;
+              next = id;
+            }
           }
-          break;
+        });
+      } else if (key === " " || key === "Enter") {
+        e.preventDefault();
+        if (selectedSlot) {
+          setSelectedSlot(null);
+        } else if (state.positions[currentId]) {
+          setSelectedSlot(currentId);
+        }
       }
 
       if (next) {
@@ -106,7 +122,14 @@ export const CoinsShuffler: React.FC = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [focusedSlot, selectedSlot, state, handleMove]);
+  }, [
+    focusedSlot,
+    selectedSlot,
+    state,
+    handleMove,
+    isMobile,
+    currentLevelConfig,
+  ]);
 
   return (
     <div
@@ -116,21 +139,53 @@ export const CoinsShuffler: React.FC = () => {
         flexDirection: "column",
         alignItems: "center",
         padding: "20px",
-        backgroundColor: "#fdf2f8", // Soft pink/lavender background
-        color: "#4c1d95", // Dark purple text
+        backgroundColor: "#fdf2f8",
+        color: "#4c1d95",
         minHeight: "100vh",
-        fontFamily: "'Comic Sans MS', 'Chalkboard SE', 'cursive', sans-serif", // Playful font
+        fontFamily: "'Comic Sans MS', 'Chalkboard SE', 'cursive', sans-serif",
       }}
     >
       <h1
         style={{
           fontSize: "36px",
-          marginBottom: "30px",
+          marginBottom: "10px",
           textShadow: "2px 2px #fbcfe8",
         }}
       >
         Пятнашки с монетами
       </h1>
+      <h2 style={{ fontSize: "24px", marginBottom: "20px", color: "#db2777" }}>
+        {currentLevelConfig.name}
+      </h2>
+
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          marginBottom: "30px",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
+        {LEVELS.map((l) => (
+          <button
+            key={l.id}
+            onClick={() => handleLevelSelect(l.id)}
+            style={{
+              padding: "8px 16px",
+              borderRadius: "20px",
+              border: "none",
+              backgroundColor: state.levelId === l.id ? "#db2777" : "#fbcfe8",
+              color: state.levelId === l.id ? "#fff" : "#4c1d95",
+              cursor: "pointer",
+              fontWeight: "bold",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            }}
+          >
+            Уровень {l.id}
+          </button>
+        ))}
+      </div>
 
       <div
         style={{
@@ -141,6 +196,7 @@ export const CoinsShuffler: React.FC = () => {
         }}
       >
         <GameBoard
+          levelConfig={currentLevelConfig}
           positions={state.positions}
           onMove={handleMove}
           focusedSlot={focusedSlot}
@@ -178,7 +234,7 @@ export const CoinsShuffler: React.FC = () => {
               fontSize: "20px",
               fontWeight: "bold",
               cursor: "pointer",
-              backgroundColor: "#ec4899", // Bright pink
+              backgroundColor: "#ec4899",
               color: "#fff",
               border: "none",
               borderRadius: "30px",
@@ -226,22 +282,42 @@ export const CoinsShuffler: React.FC = () => {
           >
             Ты справилась за {state.moveCount} ходов!
           </p>
-          <button
-            onClick={handleReset}
-            style={{
-              padding: "20px 40px",
-              fontSize: "24px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              backgroundColor: "#84cc16", // Lime green
-              color: "#fff",
-              border: "none",
-              borderRadius: "40px",
-              boxShadow: "0 6px 0 #65a30d",
-            }}
-          >
-            Играть еще раз
-          </button>
+          <div style={{ display: "flex", gap: "20px" }}>
+            <button
+              onClick={handleReset}
+              style={{
+                padding: "20px 40px",
+                fontSize: "24px",
+                fontWeight: "bold",
+                cursor: "pointer",
+                backgroundColor: "#ec4899",
+                color: "#fff",
+                border: "none",
+                borderRadius: "40px",
+                boxShadow: "0 6px 0 #be185d",
+              }}
+            >
+              Еще раз
+            </button>
+            {state.levelId < LEVELS.length && (
+              <button
+                onClick={handleNextLevel}
+                style={{
+                  padding: "20px 40px",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  backgroundColor: "#84cc16",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "40px",
+                  boxShadow: "0 6px 0 #65a30d",
+                }}
+              >
+                Дальше! ➡️
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>

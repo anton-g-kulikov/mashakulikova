@@ -2,46 +2,48 @@ import {
   getInitialState,
   isValidMove,
   moveCoin,
-  isWin,
 } from "../../src/minigames/coins-shuffler/logic";
+import { LEVELS } from "../../src/minigames/coins-shuffler/levels";
 
 describe("Coins Shuffler Logic", () => {
-  test("SHUFFLE-TEST-001: Board Adjacency Logic", () => {
+  test("SHUFFLE-TEST-001: Board Adjacency Logic (Level 3)", () => {
+    const level3 = LEVELS.find((l) => l.id === 3)!;
     // L2 is adjacent to C1, L1, L3
-    expect(isValidMove("L2", "C1")).toBe(true);
-    expect(isValidMove("L2", "L1")).toBe(true);
-    expect(isValidMove("L2", "L3")).toBe(true);
+    expect(isValidMove(level3, "L2", "C1")).toBe(true);
+    expect(isValidMove(level3, "L2", "L1")).toBe(true);
+    expect(isValidMove(level3, "L2", "L3")).toBe(true);
     // L2 is NOT adjacent to C2, R2, etc.
-    expect(isValidMove("L2", "C2")).toBe(false);
-    expect(isValidMove("L2", "R2")).toBe(false);
+    expect(isValidMove(level3, "L2", "C2")).toBe(false);
+    expect(isValidMove(level3, "L2", "R2")).toBe(false);
 
     // C2 is adjacent to C1, C3, P1
-    expect(isValidMove("C2", "C1")).toBe(true);
-    expect(isValidMove("C2", "C3")).toBe(true);
-    expect(isValidMove("C2", "P1")).toBe(true);
+    expect(isValidMove(level3, "C2", "C1")).toBe(true);
+    expect(isValidMove(level3, "C2", "C3")).toBe(true);
+    expect(isValidMove(level3, "C2", "P1")).toBe(true);
   });
 
-  test("SHUFFLE-TEST-002: Valid Move Execution", () => {
-    const state = getInitialState();
-    // Initially L2 has a Blue coin, C1 is empty
-    const newState = moveCoin(state, "L2", "C1");
-    expect(newState.positions["L2"]).toBe(null);
-    expect(newState.positions["C1"]).toBe("blue");
+  test("SHUFFLE-TEST-002: Valid Move Execution (Level 1)", () => {
+    const state = getInitialState(1);
+    // Initially S1 has a Blue coin, S2 is empty
+    const newState = moveCoin(state, "S1", "S2");
+    expect(newState.positions["S1"]).toBe(null);
+    expect(newState.positions["S2"]).toBe("blue");
     expect(newState.moveCount).toBe(1);
   });
 
   test("SHUFFLE-TEST-007: Move Counter Logic", () => {
-    let state = getInitialState();
-    state = moveCoin(state, "L2", "C1");
-    state = moveCoin(state, "C1", "C2");
+    let state = getInitialState(1);
+    state = moveCoin(state, "S1", "S2");
+    state = moveCoin(state, "S2", "S1");
     expect(state.moveCount).toBe(2);
 
     // Invalid move should not increment counter
-    const invalidState = moveCoin(state, "C2", "R1"); // Not adjacent
+    const invalidState = moveCoin(state, "S1", "S3"); // Not adjacent in Level 1
     expect(invalidState.moveCount).toBe(2);
   });
 
-  test("SHUFFLE-TEST-003: Win Condition Detection", () => {
+  test("SHUFFLE-TEST-003: Win Condition Detection (Level 3)", () => {
+    const level3 = LEVELS.find((l) => l.id === 3)!;
     const winPositions: Record<string, any> = {
       L1: "green",
       L2: "green",
@@ -54,9 +56,9 @@ describe("Coins Shuffler Logic", () => {
       C3: null,
       P1: null,
     };
-    expect(isWin(winPositions as any)).toBe(true);
+    expect(level3.winCondition(winPositions as any)).toBe(true);
 
-    const initialPositions = getInitialState().positions;
-    expect(isWin(initialPositions)).toBe(false);
+    const initialPositions = getInitialState(3).positions;
+    expect(level3.winCondition(initialPositions)).toBe(false);
   });
 });

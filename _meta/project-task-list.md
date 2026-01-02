@@ -26,6 +26,7 @@
 - [x] **SHUFFLE-TASK-016: Fix mobile drag direction** - ✅ **COMPLETED** - Replaced CSS rotation with dynamic coordinate swapping to ensure drag logic matches visual layout
 - [x] **SHUFFLE-TASK-017: Translate Coins Shuffler to Russian** - ✅ **COMPLETED** - Translated all UI strings, legend, and aria-labels to Russian; updated tests to match <!-- id: 17 -->
 - [x] **SHUFFLE-TASK-018: Update design for child-friendly theme** - ✅ **COMPLETED** - Update colors, backgrounds, and styles to be more colorful and appealing to children <!-- id: 18 -->
+- [x] **SHUFFLE-TASK-019: Implement multi-level system** - ✅ **COMPLETED** - Added 3 levels with increasing difficulty, level selection UI, and dynamic board rendering <!-- id: 19 -->
 
 ## Project Structure & Navigation
 

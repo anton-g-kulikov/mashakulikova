@@ -7,9 +7,8 @@ describe("Coins Shuffler Touch/Drag", () => {
   test("SHUFFLE-TEST-006: Touch Dragging (Simulated)", () => {
     render(<CoinsShuffler />);
 
-    // This is a placeholder for actual drag testing which is complex in JSDOM
-    // We will verify that the component renders and we can find coins
-    const coins = screen.getAllByRole("img", { hidden: true }); // SVG circles don't have role img by default, but we can add it
-    expect(coins.length).toBe(6);
+    // Level 1 has 2 coins
+    const coins = screen.getAllByRole("img", { hidden: true });
+    expect(coins.length).toBe(2);
   });
 });

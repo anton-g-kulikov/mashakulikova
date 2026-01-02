@@ -53,13 +53,13 @@ describe("Touch Drag Sensitivity", () => {
   test("should trigger move when dragged 10 units (very sensitive)", () => {
     render(<CoinsShuffler />);
 
-    // L2 is at (50, 130). C1 is at (130, 130).
-    // C1 is empty initially.
-    // Dragging L2 coin by x=10 puts it at (60, 130).
-    // Distance to C1 is 130 - 60 = 70.
+    // Level 1: S1 is at (50, 50). S2 is at (130, 50).
+    // S2 is empty initially.
+    // Dragging S1 coin by x=10 puts it at (60, 50).
+    // Distance to S2 is 130 - 60 = 70.
     // Our threshold is 72. 70 < 72, so it should move.
 
-    const coin = screen.getByTestId("coin-L2");
+    const coin = screen.getByTestId("coin-S1");
     (coin as any)._testOffset = { x: 10, y: 0 };
 
     // Use fireEvent.click to trigger the mocked onDragEnd
@@ -68,9 +68,9 @@ describe("Touch Drag Sensitivity", () => {
     // Check if move counter increased
     expect(screen.getByText(/Ходы: 1/)).toBeInTheDocument();
 
-    // Check if L2 is now empty and C1 has the coin
-    expect(screen.queryByTestId("coin-L2")).not.toBeInTheDocument();
-    expect(screen.getByTestId("coin-C1")).toBeInTheDocument();
+    // Check if S1 is now empty and S2 has the coin
+    expect(screen.queryByTestId("coin-S1")).not.toBeInTheDocument();
+    expect(screen.getByTestId("coin-S2")).toBeInTheDocument();
   });
 
   test("should trigger move correctly on mobile (rotated coordinates)", () => {
@@ -83,14 +83,11 @@ describe("Touch Drag Sensitivity", () => {
 
     render(<CoinsShuffler />);
 
-    // L2 is at (50, 130) in Desktop.
-    // In Mobile (swapped), L2 is at (130, 50).
-    // C1 is at (130, 130) in Desktop.
-    // In Mobile (swapped), C1 is at (130, 130).
-    // To move L2 -> C1, we need to move +Y (Down).
+    // Level 1 Mobile: S1 is at (50, 50). S2 is at (50, 130).
+    // To move S1 -> S2, we need to move +Y (Down).
     // So we simulate offset { x: 0, y: 25 }.
 
-    const coin = screen.getByTestId("coin-L2");
+    const coin = screen.getByTestId("coin-S1");
     (coin as any)._testOffset = { x: 0, y: 25 };
 
     fireEvent.click(coin);
@@ -98,8 +95,8 @@ describe("Touch Drag Sensitivity", () => {
     // Check if move counter increased
     expect(screen.getByText(/Ходы: 1/)).toBeInTheDocument();
 
-    // Check if L2 is now empty and C1 has the coin
-    expect(screen.queryByTestId("coin-L2")).not.toBeInTheDocument();
-    expect(screen.getByTestId("coin-C1")).toBeInTheDocument();
+    // Check if S1 is now empty and S2 has the coin
+    expect(screen.queryByTestId("coin-S1")).not.toBeInTheDocument();
+    expect(screen.getByTestId("coin-S2")).toBeInTheDocument();
   });
 });

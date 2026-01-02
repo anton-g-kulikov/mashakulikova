@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { SlotId, CoinColor } from "./logic";
+import { CoinColor } from "./logic";
+import { LevelConfig, SlotId } from "./levels";
 
 interface GameBoardProps {
+  levelConfig: LevelConfig;
   positions: Record<SlotId, CoinColor | null>;
   onMove: (from: SlotId, to: SlotId) => void;
   focusedSlot: SlotId | null;
@@ -10,62 +12,28 @@ interface GameBoardProps {
   isMobile: boolean;
 }
 
-export const SLOT_COORDS_DESKTOP: Record<SlotId, { x: number; y: number }> = {
-  L1: { x: 50, y: 50 },
-  L2: { x: 50, y: 130 },
-  L3: { x: 50, y: 210 },
-  C1: { x: 130, y: 130 },
-  C2: { x: 210, y: 130 },
-  C3: { x: 290, y: 130 },
-  R1: { x: 370, y: 50 },
-  R2: { x: 370, y: 130 },
-  R3: { x: 370, y: 210 },
-  P1: { x: 210, y: 50 },
-};
-
-export const SLOT_COORDS_MOBILE: Record<SlotId, { x: number; y: number }> = {
-  L1: { x: 50, y: 50 },
-  L2: { x: 130, y: 50 },
-  L3: { x: 210, y: 50 },
-  C1: { x: 130, y: 130 },
-  C2: { x: 130, y: 210 },
-  C3: { x: 130, y: 290 },
-  R1: { x: 50, y: 370 },
-  R2: { x: 130, y: 370 },
-  R3: { x: 210, y: 370 },
-  P1: { x: 50, y: 210 },
-};
-
-const BOARD_PATH_DESKTOP =
-  "M 10,10 H 90 V 90 H 170 V 10 H 250 V 90 H 330 V 10 H 410 V 250 H 330 V 170 H 90 V 250 H 10 Z";
-const BOARD_PATH_MOBILE =
-  "M 10,10 H 250 V 90 H 170 V 330 H 250 V 410 H 10 V 330 H 90 V 250 H 10 V 170 H 90 V 90 H 10 Z";
-
 export const GameBoard: React.FC<GameBoardProps> = ({
+  levelConfig,
   positions,
   onMove,
   focusedSlot,
   selectedSlot,
   isMobile,
 }) => {
-  const slotCoords = isMobile ? SLOT_COORDS_MOBILE : SLOT_COORDS_DESKTOP;
-  const boardPath = isMobile ? BOARD_PATH_MOBILE : BOARD_PATH_DESKTOP;
+  const slotCoords = isMobile
+    ? levelConfig.slotCoordsMobile
+    : levelConfig.slotCoordsDesktop;
+  const boardPath = isMobile
+    ? levelConfig.boardPathMobile
+    : levelConfig.boardPathDesktop;
 
   const handleDragEnd = (from: SlotId, info: any) => {
     // Find the nearest slot
     let nearestSlot: SlotId | null = null;
     let minDistance = Infinity;
 
-    // We need to convert screen coordinates to SVG coordinates or use relative drag distance
-    // For simplicity, let's use the drag offset to find the target slot
     const dragX = info.offset.x;
     const dragY = info.offset.y;
-
-    // Note: We do NOT need to manually rotate coordinates for mobile here.
-    // The SVG container is rotated via CSS transform, and framer-motion's drag
-    // logic operates in the local coordinate space of the element.
-    // So dragging "Down" on screen (along the rotated X-axis) correctly reports
-    // as an X-offset in the local space, which matches our board logic.
 
     const currentCoord = slotCoords[from];
     const targetX = currentCoord.x + dragX;
@@ -84,7 +52,6 @@ export const GameBoard: React.FC<GameBoardProps> = ({
     });
 
     // Trigger movement if we are within 72 units of another slot
-    // (Since slots are 80 units apart, this means after ~8 units of drag)
     if (nearestSlot && minDistance < 72) {
       onMove(from, nearestSlot);
     }
@@ -93,8 +60,8 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   return (
     <div
       style={{
-        width: isMobile ? "260px" : "420px",
-        height: isMobile ? "420px" : "260px",
+        width: isMobile ? `${levelConfig.widthMobile}px` : `${levelConfig.widthDesktop}px`,
+        height: isMobile ? `${levelConfig.heightMobile}px` : `${levelConfig.heightDesktop}px`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -102,9 +69,9 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       }}
     >
       <svg
-        width={isMobile ? "260" : "420"}
-        height={isMobile ? "420" : "260"}
-        viewBox={isMobile ? "0 0 260 420" : "0 0 420 260"}
+        width={isMobile ? levelConfig.widthMobile : levelConfig.widthDesktop}
+        height={isMobile ? levelConfig.heightMobile : levelConfig.heightDesktop}
+        viewBox={isMobile ? levelConfig.viewBoxMobile : levelConfig.viewBoxDesktop}
         style={{
           flexShrink: 0,
         }}

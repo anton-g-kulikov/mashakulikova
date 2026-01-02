@@ -28,3 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Cleaned up Board UI: Removed faint slot grid lines and unified the board border into a single solid path.
   - Added Mobile Rotation: The game field now automatically rotates 90 degrees on devices with width < 480px for better portrait orientation fit.
   - Synchronized Rotated Controls: Touch dragging and keyboard navigation are now perfectly remapped to match the visual 90-degree rotation on mobile.
+  - **Russian Localization**: Translated the entire game interface, rules, and controls into Russian.
+  - **Child-Friendly Redesign**: Updated the visual theme with a colorful palette (lavender/pink), playful fonts, and bright 3D-style buttons.
+  - **Multi-Level System**: Introduced a progression system with 3 levels:
+    - Уровень 1: Разминка (3 слота, 2 монеты)
+    - Уровень 2: Посложнее (5 слотов, 4 монеты)
+    - Уровень 3: Классика (10 слотов, 6 монет)
+  - **Dynamic Navigation**: Implemented coordinate-based proximity search for keyboard navigation to support arbitrary level layouts.

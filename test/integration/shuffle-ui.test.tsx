@@ -18,19 +18,33 @@ describe("Coins Shuffler UI", () => {
     expect(screen.getByText(/Ходы: 0/i)).toBeInTheDocument();
   });
 
-  test("Board renders all slots", () => {
+  test("Board renders correct number of slots for Level 1", () => {
     const { container } = render(<CoinsShuffler />);
-    // We expect 10 slots in the SVG
+    // Level 1 has 3 slots
+    const slots = container.querySelectorAll('[data-testid^="slot-"]');
+    expect(slots.length).toBe(3);
+  });
+
+  test("Level selection changes board", () => {
+    const { container } = render(<CoinsShuffler />);
+    
+    // Click Level 3 button
+    const level3Button = screen.getByRole("button", { name: /Уровень 3/i });
+    fireEvent.click(level3Button);
+
+    // Level 3 has 10 slots
     const slots = container.querySelectorAll('[data-testid^="slot-"]');
     expect(slots.length).toBe(10);
+    expect(screen.getByText(/Классика/i)).toBeInTheDocument();
   });
+
   test("SHUFFLE-TEST-010: Reset Button Functionality", () => {
     render(<CoinsShuffler />);
 
-    // Simulate a move first (Keyboard move L2 -> C1)
-    fireEvent.keyDown(window, { key: "ArrowDown" }); // Focus L2
-    fireEvent.keyDown(window, { key: " " }); // Lock L2
-    fireEvent.keyDown(window, { key: "ArrowRight" }); // Move to C1
+    // Level 1: S1 has coin, S2 is empty. Move S1 -> S2.
+    // Initial focus is S1.
+    fireEvent.keyDown(window, { key: " " }); // Lock S1
+    fireEvent.keyDown(window, { key: "ArrowRight" }); // Move to S2
 
     expect(screen.getByText(/Ходы: 1/i)).toBeInTheDocument();
 
@@ -42,7 +56,7 @@ describe("Coins Shuffler UI", () => {
     expect(screen.getByText(/Ходы: 0/i)).toBeInTheDocument();
   });
 
-  test("SHUFFLE-TEST-014: Mobile Rotation", () => {
+  test("SHUFFLE-TEST-014: Mobile Rotation (Level 1)", () => {
     // Mock window.innerWidth
     Object.defineProperty(window, "innerWidth", {
       writable: true,
@@ -52,11 +66,11 @@ describe("Coins Shuffler UI", () => {
 
     render(<CoinsShuffler />);
 
-    // The SVG should have swapped dimensions (260x420) instead of rotation
+    // Level 1 desktop is 260x100. Mobile should be 100x260.
     const svg = screen
-      .getByRole("img", { name: /синяя монета в L1/i })
+      .getByRole("img", { name: /синяя монета в S1/i })
       .closest("svg");
-    expect(svg).toHaveAttribute("width", "260");
-    expect(svg).toHaveAttribute("height", "420");
+    expect(svg).toHaveAttribute("width", "100");
+    expect(svg).toHaveAttribute("height", "260");
   });
 });
