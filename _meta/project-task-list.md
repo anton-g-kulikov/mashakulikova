@@ -25,6 +25,11 @@
 - [x] **SHUFFLE-TASK-015: Adjust slot visual size** - ✅ **COMPLETED** - Updated board coordinates to 80px spacing to remove gaps between slots
 - [x] **SHUFFLE-TASK-016: Fix mobile drag direction** - ✅ **COMPLETED** - Replaced CSS rotation with dynamic coordinate swapping to ensure drag logic matches visual layout
 
+## Project Structure & Navigation
+
+- [x] **CORE-TASK-001: Implement routing and landing page** - ✅ **COMPLETED** - Set up react-router-dom, created Home page with links, and moved Coins Shuffler to its own route
+- [x] **CORE-TASK-002: Move static assets to public folder** - ✅ **COMPLETED** - Moved august2025 presentation to public folder for static serving
+
 ## Task Status Legend
 
 - 🟡 **IN PROGRESS** - Currently being worked on
