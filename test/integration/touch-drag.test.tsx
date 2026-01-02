@@ -34,11 +34,11 @@ jest.mock("framer-motion", () => {
                   if (onDragEnd) {
                     // Use custom attributes or event detail to pass drag info if needed
                     // For now, we'll just use a default or check if we can pass it via event
-                    const offset = (e.target as any)._testOffset || { x: 25, y: 0 };
-                    onDragEnd(
-                      {},
-                      { offset, point: { x: 0, y: 0 } }
-                    );
+                    const offset = (e.target as any)._testOffset || {
+                      x: 25,
+                      y: 0,
+                    };
+                    onDragEnd({}, { offset, point: { x: 0, y: 0 } });
                   }
                 }}
               />
@@ -84,18 +84,18 @@ describe("Touch Drag Sensitivity", () => {
     render(<CoinsShuffler />);
 
     // L2 is at (50, 150). C1 is at (150, 150).
-    // To move L2 -> C1 (Board Right), we need to drag Screen UP on rotated board.
-    // Our logic: dragX = -screenDragY; dragY = screenDragX;
-    // If screenDragY = -25 (Up), boardDragX = 25.
+    // To move L2 -> C1 (Board Right), we need to drag Screen DOWN on rotated board.
+    // Our logic: dragX = screenDragY; dragY = -screenDragX;
+    // If screenDragY = 25 (Down), boardDragX = 25.
     
     const coin = screen.getByTestId("coin-L2");
-    (coin as any)._testOffset = { x: 0, y: -25 };
+    (coin as any)._testOffset = { x: 0, y: 25 };
 
     fireEvent.click(coin);
 
     // Check if move counter increased
     expect(screen.getByText(/Moves: 1/)).toBeInTheDocument();
-    
+
     // Check if L2 is now empty and C1 has the coin
     expect(screen.queryByTestId("coin-L2")).not.toBeInTheDocument();
     expect(screen.getByTestId("coin-C1")).toBeInTheDocument();

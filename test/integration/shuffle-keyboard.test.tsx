@@ -51,7 +51,7 @@ describe("Coins Shuffler Keyboard", () => {
 
     // To move L1 -> L2 (Board Down), we need to press Screen LEFT.
     fireEvent.keyDown(window, { key: "ArrowLeft" });
-    
+
     // To verify, we'll lock and move to C1 (Board Right).
     // Board Right move = Screen DOWN.
     fireEvent.keyDown(window, { key: " " }); // Lock L2

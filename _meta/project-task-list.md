@@ -19,7 +19,8 @@
 - [x] **SHUFFLE-TASK-009: Update focus and locked border colors** - ✅ **COMPLETED** - Change focus border to yellow and locked border to violet
 - [x] **SHUFFLE-TASK-010: Update touch/drag sensitivity** - ✅ **COMPLETED** - Initialize movement significantly earlier by reducing distance threshold
 - [x] **SHUFFLE-TASK-011: Clean up board UI** - ✅ **COMPLETED** - Remove faint slot lines and solidify game field borders into a single path
-- [x] **SHUFFLE-TASK-012: Implement mobile rotation** - ✅ **COMPLETED** - Rotate game field 90 degrees on devices with width < 480px <!-- id: 12 -->
+- [x] **SHUFFLE-TASK-012: Implement mobile rotation** - ✅ **COMPLETED** - Rotate game field 90 degrees on devices with width < 480px
+- [x] **SHUFFLE-TASK-013: Fix touch and keyboard mapping for rotated board** - ✅ **COMPLETED** - Ensure actions match visual orientation on mobile <!-- id: 13 -->
 
 ## Task Status Legend
 

@@ -26,4 +26,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Increased touch sensitivity: Coins now trigger movement significantly earlier in the drag process.
   - Added dedicated Reset Button for easier game restarts.
   - Cleaned up Board UI: Removed faint slot grid lines and unified the board border into a single solid path.
-  - Added Mobile Rotation: The game field now automatically rotates 90 degrees on devices with width < 480px for better portrait orientation fit, with adjusted touch and keyboard controls.
+  - Added Mobile Rotation: The game field now automatically rotates 90 degrees on devices with width < 480px for better portrait orientation fit.
+  - Synchronized Rotated Controls: Touch dragging and keyboard navigation are now perfectly remapped to match the visual 90-degree rotation on mobile.

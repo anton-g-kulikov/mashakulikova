@@ -42,11 +42,13 @@ export const GameBoard: React.FC<GameBoardProps> = ({
 
     if (isMobile) {
       // Rotate 90deg CW:
-      // screenRight -> boardDown (boardY increases)
-      // screenDown -> boardLeft (boardX decreases)
+      // Screen Down (ys+) -> Board Right (xb+)
+      // Screen Right (xs+) -> Board Up (yb-)
+      // Screen Up (ys-) -> Board Left (xb-)
+      // Screen Left (xs-) -> Board Down (yb+)
       const tempX = dragX;
-      dragX = -dragY;
-      dragY = tempX;
+      dragX = dragY;
+      dragY = -tempX;
     }
 
     const currentCoord = SLOT_COORDS[from];

@@ -128,6 +128,13 @@
 - **Expected**: SVG has rotation transform applied when screen width < 480px
 - **Test File**: `test/integration/shuffle-ui.test.tsx`
 
+### SHUFFLE-TEST-015: Rotated Input Mapping
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify that touch and keyboard inputs are correctly remapped on mobile
+- **Expected**: Screen Down moves coin Board Right; Screen Right moves coin Board Up, etc.
+- **Test File**: `test/integration/touch-drag.test.tsx`, `test/integration/shuffle-keyboard.test.tsx`
+
 ## Test Coverage Goals
 
 - Unit Tests: 80%+ coverage for critical functionality
