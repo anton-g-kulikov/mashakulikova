@@ -93,6 +93,13 @@
 - **Expected**: Legend text is present and correctly describes touch and keyboard controls
 - **Test File**: `test/integration/shuffle-ui.test.tsx`
 
+### SHUFFLE-TEST-010: Reset Button Functionality
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify that the reset button clears the game state and move counter
+- **Expected**: Clicking reset sets moves to 0 and restores initial coin positions
+- **Test File**: `test/integration/shuffle-ui.test.tsx`
+
 ## Test Coverage Goals
 
 - Unit Tests: 80%+ coverage for critical functionality

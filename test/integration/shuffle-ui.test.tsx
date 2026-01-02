@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from '@testing-library/react';
 import "@testing-library/jest-dom";
 import { CoinsShuffler } from "../../src/minigames/coins-shuffler/CoinsShuffler";
 
@@ -24,4 +24,20 @@ describe("Coins Shuffler UI", () => {
     const slots = container.querySelectorAll('[data-testid^="slot-"]');
     expect(slots.length).toBe(10);
   });
-});
+  test('SHUFFLE-TEST-010: Reset Button Functionality', () => {
+    render(<CoinsShuffler />);
+    
+    // Simulate a move first (Keyboard move L2 -> C1)
+    fireEvent.keyDown(window, { key: 'ArrowDown' }); // Focus L2
+    fireEvent.keyDown(window, { key: ' ' }); // Lock L2
+    fireEvent.keyDown(window, { key: 'ArrowRight' }); // Move to C1
+    
+    expect(screen.getByText(/Moves: 1/i)).toBeInTheDocument();
+    
+    // Click Reset
+    const resetButton = screen.getByRole('button', { name: /Reset Game/i });
+    fireEvent.click(resetButton);
+    
+    // Verify moves reset to 0
+    expect(screen.getByText(/Moves: 0/i)).toBeInTheDocument();
+  });});

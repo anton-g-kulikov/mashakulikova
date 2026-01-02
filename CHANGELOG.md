@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - **Coins Shuffler Mini-Game**: A web-based, mobile-friendly puzzle game.
   - H-shaped board logic with 10 slots and 6 coins.
   - SVG-based game board with smooth animations.

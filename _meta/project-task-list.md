@@ -14,6 +14,7 @@
 - [x] **SHUFFLE-TASK-004: Implement Keyboard navigation and "Lock-and-Move" logic** - ✅ **COMPLETED** - Support arrow keys for focus and space for selection/movement
 - [x] **SHUFFLE-TASK-005: Add win condition detection, finish screen, and reset functionality** - ✅ **COMPLETED** - Detect when coins are swapped, show congratulations with score, and provide a way to restart
 - [x] **SHUFFLE-TASK-006: Implement Legend and Move Counter UI** - ✅ **COMPLETED** - Add a legend describing rules/controls and a counter for moves made
+- [x] **SHUFFLE-TASK-007: Implement dedicated Reset Button** - ✅ **COMPLETED** - Add a button to reset the game state and move counter
 
 ## Task Status Legend
 
