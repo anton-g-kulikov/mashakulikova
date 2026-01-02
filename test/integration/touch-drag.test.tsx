@@ -35,7 +35,7 @@ jest.mock("framer-motion", () => {
                     // Use custom attributes or event detail to pass drag info if needed
                     // For now, we'll just use a default or check if we can pass it via event
                     const offset = (e.target as any)._testOffset || {
-                      x: 25,
+                      x: 16,
                       y: 0,
                     };
                     onDragEnd({}, { offset, point: { x: 0, y: 0 } });
@@ -50,17 +50,17 @@ jest.mock("framer-motion", () => {
 });
 
 describe("Touch Drag Sensitivity", () => {
-  test("should trigger move when dragged 25 units (less than 50 midpoint)", () => {
+  test("should trigger move when dragged 16 units (less than 20)", () => {
     render(<CoinsShuffler />);
 
     // L2 is at (50, 150). C1 is at (150, 150).
     // C1 is empty initially.
-    // Dragging L2 coin by x=25 puts it at (75, 150).
-    // Distance to C1 is 150 - 75 = 75.
-    // Our threshold is 80. 75 < 80, so it should move.
+    // Dragging L2 coin by x=16 puts it at (66, 150).
+    // Distance to C1 is 150 - 66 = 84.
+    // Our threshold is 85. 84 < 85, so it should move.
 
     const coin = screen.getByTestId("coin-L2");
-    (coin as any)._testOffset = { x: 25, y: 0 };
+    (coin as any)._testOffset = { x: 16, y: 0 };
 
     // Use fireEvent.click to trigger the mocked onDragEnd
     fireEvent.click(coin);
@@ -85,11 +85,11 @@ describe("Touch Drag Sensitivity", () => {
 
     // L2 is at (50, 150). C1 is at (150, 150).
     // To move L2 -> C1 (Board Right), we need to drag Screen DOWN on rotated board.
-    // Our logic: dragX = screenDragY; dragY = -screenDragX;
-    // If screenDragY = 25 (Down), boardDragX = 25.
+    // Since the SVG is rotated via CSS, framer-motion reports this as a Local X+ drag.
+    // So we simulate offset { x: 25, y: 0 }.
     
     const coin = screen.getByTestId("coin-L2");
-    (coin as any)._testOffset = { x: 0, y: 25 };
+    (coin as any)._testOffset = { x: 25, y: 0 };
 
     fireEvent.click(coin);
 

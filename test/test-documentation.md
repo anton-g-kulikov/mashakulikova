@@ -135,6 +135,13 @@
 - **Expected**: Screen Down moves coin Board Right; Screen Right moves coin Board Up, etc.
 - **Test File**: `test/integration/touch-drag.test.tsx`, `test/integration/shuffle-keyboard.test.tsx`
 
+### SHUFFLE-TEST-016: Tuned Touch Sensitivity
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify that drag threshold is relaxed to allow easier movement
+- **Expected**: Dragging 16 units (out of 100) triggers a move
+- **Test File**: `test/integration/touch-drag.test.tsx`
+
 ## Test Coverage Goals
 
 - Unit Tests: 80%+ coverage for critical functionality

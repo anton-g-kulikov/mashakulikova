@@ -20,7 +20,8 @@
 - [x] **SHUFFLE-TASK-010: Update touch/drag sensitivity** - ✅ **COMPLETED** - Initialize movement significantly earlier by reducing distance threshold
 - [x] **SHUFFLE-TASK-011: Clean up board UI** - ✅ **COMPLETED** - Remove faint slot lines and solidify game field borders into a single path
 - [x] **SHUFFLE-TASK-012: Implement mobile rotation** - ✅ **COMPLETED** - Rotate game field 90 degrees on devices with width < 480px
-- [x] **SHUFFLE-TASK-013: Fix touch and keyboard mapping for rotated board** - ✅ **COMPLETED** - Ensure actions match visual orientation on mobile <!-- id: 13 -->
+- [x] **SHUFFLE-TASK-013: Fix touch and keyboard mapping for rotated board** - ✅ **COMPLETED** - Ensure actions match visual orientation on mobile
+- [x] **SHUFFLE-TASK-014: Tune touch sensitivity** - ✅ **COMPLETED** - Relax drag threshold to 15 units (85 distance) for easier interaction <!-- id: 14 -->
 
 ## Task Status Legend
 

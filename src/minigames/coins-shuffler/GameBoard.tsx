@@ -37,19 +37,14 @@ export const GameBoard: React.FC<GameBoardProps> = ({
 
     // We need to convert screen coordinates to SVG coordinates or use relative drag distance
     // For simplicity, let's use the drag offset to find the target slot
-    let dragX = info.offset.x;
-    let dragY = info.offset.y;
+    const dragX = info.offset.x;
+    const dragY = info.offset.y;
 
-    if (isMobile) {
-      // Rotate 90deg CW:
-      // Screen Down (ys+) -> Board Right (xb+)
-      // Screen Right (xs+) -> Board Up (yb-)
-      // Screen Up (ys-) -> Board Left (xb-)
-      // Screen Left (xs-) -> Board Down (yb+)
-      const tempX = dragX;
-      dragX = dragY;
-      dragY = -tempX;
-    }
+    // Note: We do NOT need to manually rotate coordinates for mobile here.
+    // The SVG container is rotated via CSS transform, and framer-motion's drag
+    // logic operates in the local coordinate space of the element.
+    // So dragging "Down" on screen (along the rotated X-axis) correctly reports
+    // as an X-offset in the local space, which matches our board logic.
 
     const currentCoord = SLOT_COORDS[from];
     const targetX = currentCoord.x + dragX;
@@ -67,9 +62,9 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       }
     });
 
-    // Trigger movement if we are within 80 units of another slot
-    // (Since slots are 100 units apart, this means after ~20 units of drag)
-    if (nearestSlot && minDistance < 80) {
+    // Trigger movement if we are within 85 units of another slot
+    // (Since slots are 100 units apart, this means after ~15 units of drag)
+    if (nearestSlot && minDistance < 85) {
       onMove(from, nearestSlot);
     }
   };
