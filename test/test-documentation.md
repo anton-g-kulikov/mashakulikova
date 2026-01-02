@@ -100,6 +100,13 @@
 - **Expected**: Clicking reset sets moves to 0 and restores initial coin positions
 - **Test File**: `test/integration/shuffle-ui.test.tsx`
 
+### SHUFFLE-TEST-011: Focus and Locked Border Colors
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify that the focus border is yellow and the locked border is violet
+- **Expected**: Focused slot has yellow stroke; locked slot has violet stroke
+- **Test File**: `test/integration/shuffle-ui.test.tsx`
+
 ## Test Coverage Goals
 
 - Unit Tests: 80%+ coverage for critical functionality

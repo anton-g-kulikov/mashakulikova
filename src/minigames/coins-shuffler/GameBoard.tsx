@@ -90,7 +90,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
             width="80"
             height="80"
             fill="transparent"
-            stroke={focusedSlot === id ? "#fff" : "#333"}
+            stroke={focusedSlot === id ? "#ffeb3b" : "#333"}
             strokeWidth={focusedSlot === id ? "2" : "1"}
           />
           {selectedSlot === id && (
@@ -100,7 +100,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
               width="84"
               height="84"
               fill="none"
-              stroke="#ffeb3b"
+              stroke="#9c27b0"
               strokeWidth="3"
               strokeDasharray="4 2"
             />

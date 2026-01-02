@@ -16,6 +16,7 @@
 - [x] **SHUFFLE-TASK-006: Implement Legend and Move Counter UI** - ✅ **COMPLETED** - Add a legend describing rules/controls and a counter for moves made
 - [x] **SHUFFLE-TASK-007: Implement dedicated Reset Button** - ✅ **COMPLETED** - Add a button to reset the game state and move counter
 - [x] **SHUFFLE-TASK-008: Update keyboard lock-in behavior** - ✅ **COMPLETED** - Keep coin locked after move; release only on Space hit
+- [x] **SHUFFLE-TASK-009: Update focus and locked border colors** - ✅ **COMPLETED** - Change focus border to yellow and locked border to violet
 
 ## Task Status Legend
 
