@@ -29,6 +29,7 @@
 
 - [x] **CORE-TASK-001: Implement routing and landing page** - ✅ **COMPLETED** - Set up react-router-dom, created Home page with links, and moved Coins Shuffler to its own route
 - [x] **CORE-TASK-002: Move static assets to public folder** - ✅ **COMPLETED** - Moved august2025 presentation to public folder for static serving
+- [x] **CONFIG-TASK-002: Fix TypeScript emit configuration** - ✅ **COMPLETED** - Set noEmit to true and cleaned up generated .js files to prevent duplication
 
 ## Task Status Legend
 
