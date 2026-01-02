@@ -7,6 +7,13 @@ export const CoinsShuffler: React.FC = () => {
   const [state, setState] = useState(getInitialState());
   const [focusedSlot, setFocusedSlot] = useState<SlotId | null>("L1");
   const [selectedSlot, setSelectedSlot] = useState<SlotId | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 480);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 480);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleMove = useCallback(
     (from: SlotId, to: SlotId) => {
@@ -33,7 +40,20 @@ export const CoinsShuffler: React.FC = () => {
       const current = focusedSlot || "L1";
       let next: SlotId | null = null;
 
-      switch (e.key) {
+      let key = e.key;
+      if (isMobile) {
+        // Rotate keyboard mapping for 90deg CW rotation
+        // Screen Up -> Board Left
+        // Screen Down -> Board Right
+        // Screen Left -> Board Down
+        // Screen Right -> Board Up
+        if (key === "ArrowUp") key = "ArrowLeft";
+        else if (key === "ArrowDown") key = "ArrowRight";
+        else if (key === "ArrowLeft") key = "ArrowDown";
+        else if (key === "ArrowRight") key = "ArrowUp";
+      }
+
+      switch (key) {
         case "ArrowUp":
           if (current === "L2") next = "L1";
           else if (current === "L3") next = "L2";
@@ -117,6 +137,7 @@ export const CoinsShuffler: React.FC = () => {
           onMove={handleMove}
           focusedSlot={focusedSlot}
           selectedSlot={selectedSlot}
+          isMobile={isMobile}
         />
 
         <div

@@ -121,6 +121,13 @@
 - **Expected**: No rects with #333 stroke; board outline is a single path element
 - **Test File**: `test/integration/shuffle-ui.test.tsx`
 
+### SHUFFLE-TEST-014: Mobile Rotation
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify that the game field rotates 90 degrees on small screens
+- **Expected**: SVG has rotation transform applied when screen width < 480px
+- **Test File**: `test/integration/shuffle-ui.test.tsx`
+
 ## Test Coverage Goals
 
 - Unit Tests: 80%+ coverage for critical functionality

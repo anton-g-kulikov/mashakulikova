@@ -18,7 +18,8 @@
 - [x] **SHUFFLE-TASK-008: Update keyboard lock-in behavior** - ✅ **COMPLETED** - Keep coin locked after move; release only on Space hit
 - [x] **SHUFFLE-TASK-009: Update focus and locked border colors** - ✅ **COMPLETED** - Change focus border to yellow and locked border to violet
 - [x] **SHUFFLE-TASK-010: Update touch/drag sensitivity** - ✅ **COMPLETED** - Initialize movement significantly earlier by reducing distance threshold
-- [x] **SHUFFLE-TASK-011: Clean up board UI** - ✅ **COMPLETED** - Remove faint slot lines and solidify game field borders into a single path <!-- id: 11 -->
+- [x] **SHUFFLE-TASK-011: Clean up board UI** - ✅ **COMPLETED** - Remove faint slot lines and solidify game field borders into a single path
+- [x] **SHUFFLE-TASK-012: Implement mobile rotation** - ✅ **COMPLETED** - Rotate game field 90 degrees on devices with width < 480px <!-- id: 12 -->
 
 ## Task Status Legend
 

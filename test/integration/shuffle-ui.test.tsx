@@ -41,4 +41,21 @@ describe("Coins Shuffler UI", () => {
     // Verify moves reset to 0
     expect(screen.getByText(/Moves: 0/i)).toBeInTheDocument();
   });
+
+  test("SHUFFLE-TEST-014: Mobile Rotation", () => {
+    // Mock window.innerWidth
+    Object.defineProperty(window, "innerWidth", {
+      writable: true,
+      configurable: true,
+      value: 375,
+    });
+
+    render(<CoinsShuffler />);
+
+    // The SVG should have rotate(90deg) transform
+    const svg = screen
+      .getByRole("img", { name: /blue coin at L1/i })
+      .closest("svg");
+    expect(svg).toHaveStyle("transform: rotate(90deg)");
+  });
 });

@@ -31,4 +31,34 @@ describe("Coins Shuffler Keyboard", () => {
     fireEvent.keyDown(window, { key: "ArrowRight" });
     expect(screen.getByText(/Moves: 2/i)).toBeInTheDocument();
   });
+
+  test("Mobile Keyboard Rotation", () => {
+    // Mock window.innerWidth
+    Object.defineProperty(window, "innerWidth", {
+      writable: true,
+      configurable: true,
+      value: 375,
+    });
+
+    render(<CoinsShuffler />);
+
+    // Initial focus L1.
+    // On mobile (90deg CW):
+    // Screen Down = Board Left
+    // Screen Right = Board Down
+    // Screen Up = Board Right
+    // Screen Left = Board Up
+
+    // To move L1 -> L2 (Board Down), we need to press Screen LEFT.
+    fireEvent.keyDown(window, { key: "ArrowLeft" });
+    
+    // To verify, we'll lock and move to C1 (Board Right).
+    // Board Right move = Screen DOWN.
+    fireEvent.keyDown(window, { key: " " }); // Lock L2
+    fireEvent.keyDown(window, { key: "ArrowDown" }); // Move to C1
+
+    expect(screen.getByText(/Moves: 1/i)).toBeInTheDocument();
+    expect(screen.queryByTestId("coin-L2")).not.toBeInTheDocument();
+    expect(screen.getByTestId("coin-C1")).toBeInTheDocument();
+  });
 });

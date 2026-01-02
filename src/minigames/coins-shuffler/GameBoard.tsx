@@ -7,6 +7,7 @@ interface GameBoardProps {
   onMove: (from: SlotId, to: SlotId) => void;
   focusedSlot: SlotId | null;
   selectedSlot: SlotId | null;
+  isMobile: boolean;
 }
 
 export const SLOT_COORDS: Record<SlotId, { x: number; y: number }> = {
@@ -27,17 +28,26 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   onMove,
   focusedSlot,
   selectedSlot,
+  isMobile,
 }) => {
   const handleDragEnd = (from: SlotId, info: any) => {
-    const { x, y } = info.point;
     // Find the nearest slot
     let nearestSlot: SlotId | null = null;
     let minDistance = Infinity;
 
     // We need to convert screen coordinates to SVG coordinates or use relative drag distance
     // For simplicity, let's use the drag offset to find the target slot
-    const dragX = info.offset.x;
-    const dragY = info.offset.y;
+    let dragX = info.offset.x;
+    let dragY = info.offset.y;
+
+    if (isMobile) {
+      // Rotate 90deg CW:
+      // screenRight -> boardDown (boardY increases)
+      // screenDown -> boardLeft (boardX decreases)
+      const tempX = dragX;
+      dragX = -dragY;
+      dragY = tempX;
+    }
 
     const currentCoord = SLOT_COORDS[from];
     const targetX = currentCoord.x + dragX;
@@ -63,71 +73,90 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   return (
-    <svg width="550" height="350" viewBox="0 0 550 350">
-      {/* Board Outline */}
-      <path
-        d="M 10,10 H 90 V 110 H 210 V 10 H 290 V 110 H 410 V 10 H 490 V 290 H 410 V 190 H 90 V 290 H 10 Z"
-        fill="none"
-        stroke="#fff"
-        strokeWidth="2"
-      />
+    <div
+      style={{
+        width: isMobile ? "350px" : "550px",
+        height: isMobile ? "550px" : "350px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "visible",
+      }}
+    >
+      <svg
+        width="550"
+        height="350"
+        viewBox="0 0 550 350"
+        style={{
+          transform: isMobile ? "rotate(90deg)" : "none",
+          flexShrink: 0,
+        }}
+      >
+        {/* Board Outline */}
+        <path
+          d="M 10,10 H 90 V 110 H 210 V 10 H 290 V 110 H 410 V 10 H 490 V 290 H 410 V 190 H 90 V 290 H 10 Z"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="2"
+        />
 
-      {/* Slots */}
-      {(Object.keys(SLOT_COORDS) as SlotId[]).map((id) => (
-        <g key={id}>
-          <rect
-            data-testid={`slot-${id}`}
-            x={SLOT_COORDS[id].x - 40}
-            y={SLOT_COORDS[id].y - 40}
-            width="80"
-            height="80"
-            fill="transparent"
-            stroke={focusedSlot === id ? "#ffeb3b" : "transparent"}
-            strokeWidth={focusedSlot === id ? "2" : "0"}
-          />
-          {selectedSlot === id && (
+        {/* Slots */}
+        {(Object.keys(SLOT_COORDS) as SlotId[]).map((id) => (
+          <g key={id}>
             <rect
-              x={SLOT_COORDS[id].x - 42}
-              y={SLOT_COORDS[id].y - 42}
-              width="84"
-              height="84"
-              fill="none"
-              stroke="#9c27b0"
-              strokeWidth="3"
-              strokeDasharray="4 2"
+              data-testid={`slot-${id}`}
+              x={SLOT_COORDS[id].x - 40}
+              y={SLOT_COORDS[id].y - 40}
+              width="80"
+              height="80"
+              fill="transparent"
+              stroke={focusedSlot === id ? "#ffeb3b" : "transparent"}
+              strokeWidth={focusedSlot === id ? "2" : "0"}
             />
-          )}
-        </g>
-      ))}
+            {selectedSlot === id && (
+              <rect
+                x={SLOT_COORDS[id].x - 42}
+                y={SLOT_COORDS[id].y - 42}
+                width="84"
+                height="84"
+                fill="none"
+                stroke="#9c27b0"
+                strokeWidth="3"
+                strokeDasharray="4 2"
+              />
+            )}
+          </g>
+        ))}
 
-      {/* Coins */}
-      {(Object.entries(positions) as [SlotId, CoinColor | null][]).map(
-        ([id, color]) => {
-          if (!color) return null;
-          return (
-            <motion.circle
-              key={id}
-              data-testid={`coin-${id}`}
-              role="img"
-              aria-label={`${color} coin at ${id}`}
-              cx={SLOT_COORDS[id].x}
-              cy={SLOT_COORDS[id].y}
-              r="35"
-              fill={color === "blue" ? "#4a90e2" : "#7ed321"}
-              stroke="#fff"
-              strokeWidth="2"
-              drag
-              dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-              dragElastic={0.1}
-              onDragEnd={(_, info) => handleDragEnd(id, info)}
-              whileHover={{ scale: 1.1 }}
-              whileDrag={{ scale: 1.2, zIndex: 10 }}
-              layout
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            />
-          );
-        }
-      )}
-    </svg>
+        {/* Coins */}
+        {(Object.entries(positions) as [SlotId, CoinColor | null][]).map(
+          ([id, color]) => {
+            if (!color) return null;
+            return (
+              <motion.circle
+                key={id}
+                data-testid={`coin-${id}`}
+                role="img"
+                aria-label={`${color} coin at ${id}`}
+                cx={SLOT_COORDS[id].x}
+                cy={SLOT_COORDS[id].y}
+                r="35"
+                fill={color === "blue" ? "#4a90e2" : "#7ed321"}
+                stroke="#fff"
+                strokeWidth="2"
+                drag
+                dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                dragElastic={0.1}
+                onDragEnd={(_, info) => handleDragEnd(id, info)}
+                whileHover={{ scale: 1.1 }}
+                whileDrag={{ scale: 1.2, zIndex: 10 }}
+                layout
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              />
+            );
+          }
+        )}
+      </svg>
+    </div>
   );
 };
