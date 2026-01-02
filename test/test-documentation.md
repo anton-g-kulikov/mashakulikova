@@ -107,6 +107,13 @@
 - **Expected**: Focused slot has yellow stroke; locked slot has violet stroke
 - **Test File**: `test/integration/shuffle-ui.test.tsx`
 
+### SHUFFLE-TEST-012: Touch Drag Sensitivity
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify that the drag threshold is reduced for earlier movement initialization
+- **Expected**: Coin moves to adjacent slot with a smaller drag distance (e.g., 25 units instead of 50+ units)
+- **Test File**: `test/integration/touch-drag.test.tsx`
+
 ## Test Coverage Goals
 
 - Unit Tests: 80%+ coverage for critical functionality

@@ -44,6 +44,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
     const targetY = currentCoord.y + dragY;
 
     (Object.keys(SLOT_COORDS) as SlotId[]).forEach((id) => {
+      if (id === from) return;
       const slot = SLOT_COORDS[id];
       const dist = Math.sqrt(
         Math.pow(slot.x - targetX, 2) + Math.pow(slot.y - targetY, 2)
@@ -54,7 +55,9 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       }
     });
 
-    if (nearestSlot && nearestSlot !== from && minDistance < 60) {
+    // Trigger movement if we are within 80 units of another slot
+    // (Since slots are 100 units apart, this means after ~20 units of drag)
+    if (nearestSlot && minDistance < 80) {
       onMove(from, nearestSlot);
     }
   };
@@ -115,6 +118,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           return (
             <motion.circle
               key={id}
+              data-testid={`coin-${id}`}
               role="img"
               aria-label={`${color} coin at ${id}`}
               cx={SLOT_COORDS[id].x}

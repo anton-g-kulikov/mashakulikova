@@ -17,3 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Move counter and game legend.
   - Finish screen with congratulations and final score.
   - Comprehensive test suite (Unit and Integration tests).
+
+### Changed
+
+- **Coins Shuffler Refinements**:
+  - Improved keyboard navigation: Coins now remain locked after a move until explicitly unlocked with Space.
+  - Enhanced visual feedback: Focus border changed to yellow, locked border changed to violet.
+  - Increased touch sensitivity: Coins now trigger movement significantly earlier in the drag process.
+  - Added dedicated Reset Button for easier game restarts.
