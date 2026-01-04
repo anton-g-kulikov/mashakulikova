@@ -58,8 +58,14 @@
 - [x] **UI-TASK-008: Update main page button colors** - ✅ **COMPLETED** - Change August 2025 button to pink (primary) and mini-games to green (secondary)
 - [x] **CONFIG-TASK-005: Update project name to mashakulikova** - ✅ **COMPLETED** - Update all references from mariyakulikova to mashakulikova after repo rename
 - [x] **UI-TASK-009: Restructure Coins Shuffler layout** - ✅ **COMPLETED** - Move move counter into its own row, give the board a dedicated row, and place the legend below the field (Est: 1.5h)
+
   1.  ✅ Update layout markup and styling to create the new stacked rows
   2.  ✅ Adjust responsive behavior/tests to reflect the new structure
+
+- [x] **UI-TASK-010: Add SPA fallback page** - ✅ **COMPLETED** - Provide GitHub Pages-compatible SPA fallback so deep links load (Est: 1.0h)
+  1. ✅ Document fallback behaviour and tests
+  2. ✅ Add `404.html` SPA redirect shim and ensure Vite publishes it
+  3. ✅ Verify deep-link navigation locally and via documentation updates
 
 ## Memory Grid Mini-Game
 

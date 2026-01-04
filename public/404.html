@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting...</title>
+    <!--
+      Single Page Apps for GitHub Pages fallback
+      MIT License: https://github.com/rafgraph/spa-github-pages
+      This file must stay >512 bytes for IE compatibility. Extra descriptive
+      copy below ensures the size requirement and clarifies behaviour when
+      someone opens this file directly during debugging.
+    -->
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 2rem;
+        background: #f8f5ff;
+        color: #211a28;
+      }
+    </style>
+    <script>
+      (function (l) {
+        var pathSegmentsToKeep = 0;
+        var newUrl =
+          l.protocol +
+          "//" +
+          l.hostname +
+          (l.port ? ":" + l.port : "") +
+          l.pathname
+            .split("/")
+            .slice(0, 1 + pathSegmentsToKeep)
+            .join("/") +
+          "/?/" +
+          l.pathname
+            .slice(1)
+            .split("/")
+            .slice(pathSegmentsToKeep)
+            .join("/")
+            .replace(/&/g, "~and~") +
+          (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+          l.hash;
+        l.replace(newUrl);
+      })(window.location);
+    </script>
+  </head>
+  <body>
+    <h1>Redirecting...</h1>
+    <p>Перенаправляем вас на нужную страницу приложения.</p>
+    <p>
+      Если вы видите этот экран дольше пары секунд, вернитесь на главную:
+      <a href="/">mashakulikova.ru</a>
+    </p>
+  </body>
+</html>

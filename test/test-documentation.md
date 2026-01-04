@@ -174,6 +174,14 @@
 - **Expected**: `.github/workflows/deploy.yml` exists and contains build/deploy steps
 - **Test File**: N/A (Manual check)
 
+### CONFIG-TEST-005: SPA fallback routing
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify that GitHub Pages serves the SPA fallback for unknown routes
+- **Expected**: Requesting `/memory-grid` or `/coins-shuffler` directly returns `index.html` via 404 fallback script, allowing the React router to render the correct page without 404
+- **Test File**: N/A (Manual check / deployment verification)
+- **Notes**: `npm run build` output now includes `dist/404.html`, and inspection confirms both redirect scripts are present so GitHub Pages serves the SPA correctly.
+
 ### SEO-TEST-001: Document titles localization
 
 - **Status**: ✅ COMPLETED

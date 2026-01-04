@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Deployment**: Added GitHub Pages-compatible SPA fallback (history rewrite script + `public/404.html`) so deep links like `/memory-grid` load without 404s.
 - **Coins Shuffler**: Added Level 3 ("Клевер") and Level 4 ("Две башни", ранее "Лабиринт") with new board layouts and increased difficulty. Level 3 features a complex clover-like structure with loops and a central obstacle.
 - **Coins Shuffler**: Reordered levels for better progression (Clover is Level 3, Maze is Level 4, Classic is Level 5).
 - New minigame: **Sequential Memory Grid** (Последовательная память).
