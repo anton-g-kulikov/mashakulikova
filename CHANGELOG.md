@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Coins Shuffler**: Added Level 4 ("Клевер") and Level 5 ("Лабиринт") with new board layouts and increased difficulty. Level 4 features a complex clover-like structure with loops and a central obstacle.
+- **Coins Shuffler**: Added Level 3 ("Клевер") and Level 4 ("Две башни", ранее "Лабиринт") with new board layouts and increased difficulty. Level 3 features a complex clover-like structure with loops and a central obstacle.
+- **Coins Shuffler**: Reordered levels for better progression (Clover is Level 3, Maze is Level 4, Classic is Level 5).
 - New minigame: **Sequential Memory Grid** (Последовательная память).
   - 5x5 grid with numbers to memorize and recall.
   - 3 levels of increasing difficulty.
@@ -72,8 +73,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Synchronized Rotated Controls: Touch dragging and keyboard navigation are now perfectly remapped to match the visual 90-degree rotation on mobile.
   - **Russian Localization**: Translated the entire game interface, rules, and controls into Russian.
   - **Child-Friendly Redesign**: Updated the visual theme with a colorful palette (lavender/pink), playful fonts, and bright 3D-style buttons.
-  - **Multi-Level System**: Introduced a progression system with 3 levels:
+  - **Multi-Level System**: Introduced a progression system with 5 levels:
     - Уровень 1: Разминка (3 слота, 2 монеты)
     - Уровень 2: Посложнее (5 слотов, 4 монеты)
-    - Уровень 3: Классика (10 слотов, 6 монет)
+    - Уровень 3: Клевер (12 слотов, циклические дорожки)
+    - Уровень 4: Две башни (14 слотов, два кольца и мосты)
+    - Уровень 5: Классика (10 слотов, знакомая «П»-форма)
   - **Dynamic Navigation**: Implemented coordinate-based proximity search for keyboard navigation to support arbitrary level layouts.
+  - **Naming Update**: Переименовали уровень 4 из «Лабиринт» в «Две башни», чтобы название отражало конструкцию доски.
+
+### Fixed
+
+- **Coins Shuffler**: Corrected Level 4 ("Две башни", ранее "Лабиринт") adjacency so the top-right coin can move into the slot beneath it when it is empty, adding regression coverage for the scenario.

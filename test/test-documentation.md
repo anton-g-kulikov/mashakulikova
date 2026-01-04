@@ -283,7 +283,7 @@
 
 - **Status**: ✅ COMPLETED
 - **Description**: Verify that the game supports multiple levels with different layouts and win conditions
-- **Expected**: Level selection buttons work; board renders correct number of slots and coins for each level; win condition is level-specific
+- **Expected**: Level selection buttons work; board renders correct number of slots and coins for each level (L1:4, L2:7, L3:12, L4:14, L5:10); win condition is level-specific and labels reflect the new order (Клевер → L3, Две башни → L4, Классика → L5)
 - **Test File**: `test/integration/shuffle-ui.test.tsx`, `test/unit/shuffle-logic.test.ts`
 
 ### SHUFFLE-TEST-025: Enlarged move-dot hit area
@@ -293,19 +293,33 @@
 - **Expected**: Each move dot renders an expanded hit target (e.g., r≥33px) that triggers the move when clicked/tapped
 - **Test File**: `test/integration/shuffle-ui.test.tsx`
 
-### SHUFFLE-TEST-026: Level 4 Configuration and Win Condition
+### SHUFFLE-TEST-026: Level 3 Configuration and Win Condition
 
 - **Status**: ✅ COMPLETED
-- **Description**: Verify that Level 4 (The Clover) has correct slots, adjacency, and win condition
-- **Expected**: Level 4 is selectable, has 12 slots with loops and a central obstacle, and win condition triggers when coins are swapped
+- **Description**: Verify that Level 3 (The Clover) has correct slots, adjacency, and win condition
+- **Expected**: Level 3 is selectable, has 12 slots with loops and a central obstacle, and win condition triggers when coins are swapped
 - **Test File**: `test/unit/shuffle-logic.test.ts`
 
-### SHUFFLE-TEST-027: Level 5 Configuration and Win Condition
+### SHUFFLE-TEST-027: Level 4 Configuration and Win Condition
 
 - **Status**: ✅ COMPLETED
-- **Description**: Verify that Level 5 (The Maze) has correct slots, adjacency, and win condition
-- **Expected**: Level 5 is selectable, has complex adjacency, and win condition triggers when coins are swapped
+- **Description**: Verify that Level 4 (The Maze) has correct slots, adjacency, and win condition
+- **Expected**: Level 4 is selectable, has complex adjacency, and win condition triggers when coins are swapped
 - **Test File**: `test/unit/shuffle-logic.test.ts`
+
+### SHUFFLE-TEST-028: Maze top-right downward move
+
+- **Status**: ✅ COMPLETED
+- **Description**: Ensure the top-right coin on Level 4 can move downward into the slot directly beneath it once that slot is empty
+- **Expected**: After freeing the slot beneath `R1`, `isValidMove` and `moveCoin` allow `R1 → R4`, and UI move dots include `R4` as a target
+- **Test File**: `test/unit/shuffle-logic.test.ts`
+
+### SHUFFLE-TEST-029: Level order swap regression
+
+- **Status**: ✅ COMPLETED
+- **Description**: Validate that after swapping "Классика" to Level 5 and "Две башни" (ex-"Лабиринт") to Level 4, all logic/tests referencing level IDs still align with the correct configurations
+- **Expected**: `getInitialState(4)` loads Maze configuration, `getInitialState(5)` loads Classic configuration, and UI level buttons/rendering follow the new order
+- **Test File**: `test/unit/shuffle-logic.test.ts`, `test/integration/shuffle-ui.test.tsx`
 
 ## UI Test Cases
 

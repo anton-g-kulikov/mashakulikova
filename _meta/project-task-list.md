@@ -39,8 +39,12 @@
 
 - [x] **SHUFFLE-TASK-025: Increase move-dot hit radius to 33px** - ✅ **COMPLETED** - Further expand the invisible target circle for move dots from 22px to 33px radius to improve tapability
 
-- [x] **SHUFFLE-TASK-026: Redesign Level 4: "The Clover"** - ✅ **COMPLETED** - Replace the cross design with a more complex "Clover" layout with a central obstacle (12 slots, loops)
+- [x] **SHUFFLE-TASK-026: Redesign Level 3: "The Clover"** - ✅ **COMPLETED** - Replace the cross design with a more complex "Clover" layout with a central obstacle (12 slots, loops)
 - [x] **SHUFFLE-TASK-027: Design and implement Level 5: "The Maze"** - ✅ **COMPLETED** - Add a new level with a more complex branching structure and 8 coins
+- [x] **SHUFFLE-TASK-028: Reorder levels for better progression** - ✅ **COMPLETED** - Move "Clover" to Level 3 and "Classic" to Level 4
+- [x] **SHUFFLE-TASK-029: Fix Maze adjacency for top-right coin** - ✅ **COMPLETED** - Ensure the top-right coin on Level 5 can move downward into its neighboring slot when it is empty
+- [x] **SHUFFLE-TASK-030: Swap Classic and Maze levels** - ✅ **COMPLETED** - Make "Классика" level 5 and "Лабиринт" level 4, updating logic, tests, and documentation
+- [x] **SHUFFLE-TASK-031: Rename "Лабиринт" level to "Две башни"** - ✅ **COMPLETED** - Update level names, UI text, tests, and docs to reflect the new title for Level 4
 
 ## UI & Layout
 
