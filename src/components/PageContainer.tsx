@@ -16,11 +16,13 @@ export const PageContainer: React.FC<PageContainerProps> = ({
     <div
       className={className}
       style={{
-        padding: theme.spacing.xl,
+        padding: `clamp(${theme.spacing.sm}, 5vw, ${theme.spacing.xl})`,
         fontFamily: theme.fonts.main,
         backgroundColor: theme.colors.background,
         color: theme.colors.text,
         minHeight: "100vh",
+        width: "100%",
+        boxSizing: "border-box",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

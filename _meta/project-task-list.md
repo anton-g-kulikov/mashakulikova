@@ -47,6 +47,7 @@
 - [x] **UI-TASK-004: Implement shared UI components** - ✅ **COMPLETED** - Create reusable Button, Heading, PageContainer, and Card components
 - [x] **UI-TASK-005: Refactor Home page to use shared components** - ✅ **COMPLETED** - Update Home.tsx to use the new design system components
 - [x] **UI-TASK-006: Refactor Coins Shuffler to use shared components** - ✅ **COMPLETED** - Update CoinsShuffler and sub-components to use the new design system components
+- [x] **UI-TASK-007: Fix main page mobile layout centering** - ✅ **COMPLETED** - Adjust PageContainer padding and component font sizes for better mobile responsiveness on small screens
 - [x] **CONFIG-TASK-005: Update project name to mashakulikova** - ✅ **COMPLETED** - Update all references from mariyakulikova to mashakulikova after repo rename
 
 ## Memory Grid Mini-Game

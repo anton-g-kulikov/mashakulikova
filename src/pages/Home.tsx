@@ -10,17 +10,19 @@ export const Home: React.FC = () => {
   return (
     <PageContainer>
       <Heading>Маша и папа 💜</Heading>
-      <nav style={{ marginTop: "20px" }}>
+      <nav style={{ marginTop: "20px", width: "100%", maxWidth: "400px" }}>
         <ul
           style={{
             listStyle: "none",
             padding: 0,
+            margin: 0,
             display: "flex",
             flexDirection: "column",
             gap: "20px",
+            width: "100%",
           }}
         >
-          <li>
+          <li style={{ width: "100%" }}>
             <Button
               as={Link}
               to="/coins-shuffler"
@@ -30,7 +32,7 @@ export const Home: React.FC = () => {
               🎮 Головоломка
             </Button>
           </li>
-          <li>
+          <li style={{ width: "100%" }}>
             <Button
               as={Link}
               to="/memory-grid"
@@ -41,7 +43,7 @@ export const Home: React.FC = () => {
               🧠 Запоминалка
             </Button>
           </li>
-          <li>
+          <li style={{ width: "100%" }}>
             <Button
               as="a"
               href="/august2025/presentation.html"

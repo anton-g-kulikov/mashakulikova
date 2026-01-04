@@ -46,6 +46,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Mobile Responsiveness**:
+  - Improved main page layout for small mobile devices (Android/iOS).
+  - Implemented responsive padding in `PageContainer` using `clamp`.
+  - Added responsive font sizes for `Heading` and `Button` components.
+  - Fixed off-center layout issues on small screens by ensuring proper width and box-sizing.
 - **Coins Shuffler Refinements**:
   - Improved keyboard navigation: Coins now remain locked after a move until explicitly unlocked with Space.
   - Enhanced visual feedback: Focus border changed to yellow, locked border changed to violet.

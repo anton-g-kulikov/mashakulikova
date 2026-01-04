@@ -8,13 +8,13 @@ describe("Heading Component", () => {
     render(<Heading>Main Title</Heading>);
     const heading = screen.getByText("Main Title");
     expect(heading.tagName).toBe("H1");
-    expect(heading).toHaveStyle({ fontSize: "48px" });
+    expect(heading).toHaveStyle({ fontSize: "clamp(32px, 10vw, 48px)" });
   });
 
   it("renders level 2 heading", () => {
     render(<Heading level={2}>Sub Title</Heading>);
     const heading = screen.getByText("Sub Title");
     expect(heading.tagName).toBe("H2");
-    expect(heading).toHaveStyle({ fontSize: "36px" });
+    expect(heading).toHaveStyle({ fontSize: "clamp(24px, 8vw, 36px)" });
   });
 });

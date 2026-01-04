@@ -311,6 +311,13 @@
 - **Expected**: Renders children within a styled div with theme background and font
 - **Test File**: `test/unit/components/PageContainer.test.tsx`
 
+### UI-TEST-007: Mobile Layout Centering
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify that the main page layout is centered and fits within small viewports without horizontal overflow
+- **Expected**: PageContainer has reduced padding on small screens; Heading and Button font sizes are appropriate for mobile; No horizontal scrollbar present
+- **Test File**: `test/unit/components/*.test.tsx` (Verified via responsive style implementation and unit tests)
+
 ## Test Coverage Goals
 
 - Unit Tests: 80%+ coverage for critical functionality
