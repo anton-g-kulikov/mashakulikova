@@ -70,11 +70,11 @@ describe("Coins Shuffler Logic", () => {
     expect(level4.slots.length).toBe(13);
     
     const winPositions: Record<string, any> = {
-      C: null,
-      N1: "green", N2: "green", N3: "green",
-      S1: "blue", S2: "blue", S3: "blue",
-      E1: null, E2: null, E3: null,
-      W1: null, W2: null, W3: null,
+      CC: null,
+      N: null, S: null, E: null, W: null,
+      NW: "green", NE: "green", PN: "green",
+      SW: "blue", SE: "blue", PS: "blue",
+      PE: null, PW: null,
     };
     expect(level4.winCondition(winPositions as any)).toBe(true);
   });

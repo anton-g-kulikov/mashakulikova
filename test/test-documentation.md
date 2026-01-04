@@ -296,8 +296,8 @@
 ### SHUFFLE-TEST-026: Level 4 Configuration and Win Condition
 
 - **Status**: ✅ COMPLETED
-- **Description**: Verify that Level 4 (The Cross) has correct slots, adjacency, and win condition
-- **Expected**: Level 4 is selectable, has 13 slots in a cross shape, and win condition triggers when coins are swapped
+- **Description**: Verify that Level 4 (The Clover) has correct slots, adjacency, and win condition
+- **Expected**: Level 4 is selectable, has 13 slots with loops, and win condition triggers when coins are swapped
 - **Test File**: `test/unit/shuffle-logic.test.ts`
 
 ### SHUFFLE-TEST-027: Level 5 Configuration and Win Condition
