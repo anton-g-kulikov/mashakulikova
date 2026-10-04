@@ -146,11 +146,10 @@ npm run build
 # Test execution
 npm test
 
-# Code linting
-npm run lint
-
 # Type validation
-npm run typecheck || tsc --noEmit
+npm run typecheck
+
+# Note: no linter is configured yet (no ESLint)
 ```
 
 ### Code Style Standards

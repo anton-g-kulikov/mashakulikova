@@ -10,13 +10,17 @@ A collection of mini-projects for Masha.
 
 ## Project Structure
 
-- `src/`: Source code for the applications.
-- `minigames/`: Collection of small interactive games.
-  - **Coins Shuffler**: A puzzle game where you swap blue and green coins.
-  - **Memory Grid**: A memory-based number sequencing game
-- `august2025/`: Presentation and image assets.
-- `_meta/`: Project management and system documentation.
-- `test/`: Test documentation and test files.
+- `src/`: Application source.
+  - `components/`: Shared UI kit (`Button`, `Card`, `Heading`, `PageContainer`, `GamePageLayout`).
+  - `minigames/`: One folder per game (`levels.ts`, `logic.ts`, view components).
+    - **Coins Shuffler** (Головоломка): A puzzle game where you swap blue and green coins.
+    - **Memory Grid** (Запоминалка): A memory-based number sequencing game.
+  - `pages/`: Route-level pages wrapping each game.
+  - `theme/`: Colors, fonts, spacing.
+- `minigames/`: Game design specs and reference images.
+- `public/august2025/`: Static August 2025 presentation and its images.
+- `_meta/`: Project task list.
+- `test/`: Test documentation, unit and integration tests.
 
 ## Getting Started
 
@@ -41,6 +45,7 @@ npm run dev
 
 ```bash
 npm test
+npm run typecheck
 ```
 
 ## Documentation

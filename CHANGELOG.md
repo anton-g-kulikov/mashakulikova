@@ -9,11 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Shared `GamePageLayout`**: every mini-game page now uses one layout (themed page + "🏠 На главную" link), giving new games a ready template.
+- **`npm run typecheck`** script; `npm run build` now runs it first.
 - **Deployment**: Added GitHub Pages-compatible SPA fallback (history rewrite script + `public/404.html`) so deep links like `/memory-grid` load without 404s.
 - **Coins Shuffler**: Added Level 3 ("Клевер") and Level 4 ("Две башни", ранее "Лабиринт") with new board layouts and increased difficulty. Level 3 features a complex clover-like structure with loops and a central obstacle.
 - **Coins Shuffler**: Reordered levels for better progression (Clover is Level 3, Maze is Level 4, Classic is Level 5).
 - New minigame: **Sequential Memory Grid** (Последовательная память).
-  - 5x5 grid with numbers to memorize and recall.
+  - Grid with numbers to memorize and recall.
   - 3 levels of increasing difficulty.
   - Scoring system: +5 for correct sequence, +1 for out-of-order numbers.
   - Heart system: Hearts are only lost when clicking empty slots.
@@ -24,13 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Visual feedback: Correct sequence numbers turn green, out-of-order numbers turn orange.
   - Added "На главную" navigation link to the Memory Grid page.
 
-### Added
-
-- **Sequential Memory Grid Mini-Game**: A memory training game where players recall numbered positions.
-  - 3 difficulty levels with increasing grid sizes (up to 5x7).
-  - Memorization phase with countdown timer.
-  - Recall phase with stopwatch and 3-life (hearts) system.
-  - Child-friendly visual theme and Russian localization.
+- **Memory Grid** (continued):
+  - 3 difficulty levels (4x4, 5x5, 5x5) with a memorization countdown and a recall stopwatch.
+  - Hearts per level: 3, 5 and 7.
   - Mobile-optimized layout.
 - **Project Rename**: Updated all project references from `mariyakulikova` to `mashakulikova` to match the new repository name and domain.
 - **Design System & Shared Components**:
@@ -49,6 +47,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Coins Shuffler page**: uses the shared game layout; removed the nested page container and hardcoded colors (padding is now consistent with Memory Grid).
+- **HTML shell**: page language set to Russian (`lang="ru"`); replaced the missing `/vite.svg` favicon with an inline 💜 emoji icon.
+- **Tests**: `TextEncoder` polyfill moved into a shared Jest setup file (`test/setup/jest.setup.ts`).
+- **Docs**: Memory Grid spec, README project structure and agent command lists now match the code.
 - **Memory Grid UI**:
   - Increased grid cell and font sizes for better visibility on mobile devices.
   - Added total error count display in the final result dialogue.

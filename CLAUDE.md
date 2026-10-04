@@ -105,10 +105,11 @@ A collection of mini-projects for Masha
 
 # Common Commands
 
-- `npm run build`: npm run build
-- `npm test`: npm test
-- `npm run lint`: npm run lint
-- `npm run typecheck`: npm run typecheck || tsc --noEmit
+- `npm run dev`: start the Vite dev server
+- `npm run build`: typecheck, then production build into `dist/`
+- `npm test`: run the Jest suite
+- `npm run typecheck`: `tsc --noEmit`
+- No linter is configured yet (no ESLint)
 
 # Development Workflow
 

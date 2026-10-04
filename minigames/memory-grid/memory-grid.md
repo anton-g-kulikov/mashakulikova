@@ -14,20 +14,19 @@ Test and train short-term visual memory by requiring the player to recall and se
 ---
 
 ## 3. Field Configurations
-| Mode   | Grid Size | Numbers Shown |
-|--------|-----------|---------------|
-| Easy   | 5×5       | 5             |
-| Medium | 5×6       | 7             |
-| Hard   | 5×7       | 10            |
+Source of truth: `src/minigames/memory-grid/levels.ts`.
+
+| Level                | Grid Size | Numbers Shown | Memorize Time | Lives |
+|----------------------|-----------|---------------|---------------|-------|
+| 1: Разминка          | 4×4       | 5             | 10 s          | 3     |
+| 2: Посложнее         | 5×5       | 6             | 15 s          | 5     |
+| 3: Классика          | 5×5       | 7             | 20 s          | 7     |
 
 ---
 
 ## 4. Timing Rules
-- Number visibility duration (configurable per difficulty):
-  - Easy: 10 seconds
-  - Medium: 15 seconds
-  - Hard: 20 seconds
-- Masking occurs immediately after the timer ends.
+- Numbers are visible for the level's memorize time (countdown shown).
+- Masking occurs immediately after the countdown ends; a stopwatch then tracks recall time.
 
 ---
 
@@ -40,29 +39,23 @@ Test and train short-term visual memory by requiring the player to recall and se
 ---
 
 ## 6. Player Interaction
-- Player clicks on masked cells.
-- Each click is validated against the expected next number in the sequence.
-- **Correct click:**
-  - Cell is revealed.
-  - Progress advances to the next number.
-- **Incorrect click:**
-  - Immediate failure **or**
-  - Strike/penalty system (configurable).
+- Player clicks on masked cells; every clicked cell is revealed.
+- **Correct next number:** green, +5 points, sequence advances (skipping numbers already revealed out of order).
+- **Number out of order:** orange, +1 point, counted as an error, no life lost.
+- **Empty cell:** counted as an error and costs one heart.
 
 ---
 
 ## 7. Win / Loss Conditions
-- **Win:** All numbered cells are correctly selected in order.
-- **Loss:**
-  - Clicking an incorrect cell, or
-  - Optionally exceeding a maximum number of allowed mistakes.
+- **Win:** all numbered cells are revealed.
+- **Loss:** hearts reach zero.
+- The result dialog appears after a 1-second delay and shows score, recall time and error count.
 
 ---
 
-## 8. Scoring (Optional)
-- Base score for successful completion.
-- Time bonus for faster completion after masking.
-- Perfect bonus for zero mistakes.
+## 8. Scoring
+- +5 for each number found in sequence, +1 for a number found out of order.
+- Not implemented (possible extensions): time bonus, perfect-round bonus.
 
 ---
 

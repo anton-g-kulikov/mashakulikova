@@ -85,6 +85,11 @@
 - [x] **CORE-TASK-001: Implement routing and landing page** - ✅ **COMPLETED** - Set up react-router-dom, created Home page with links, and moved Coins Shuffler to its own route
 - [x] **CORE-TASK-002: Move static assets to public folder** - ✅ **COMPLETED** - Moved august2025 presentation to public folder for static serving
 - [x] **CONFIG-TASK-002: Fix TypeScript emit configuration** - ✅ **COMPLETED** - Set noEmit to true and cleaned up generated .js files to prevent duplication
+- [x] **CORE-TASK-003: Pre-flight cleanup before the next mini-game** - ✅ **COMPLETED** - Unify game page layout, fix script/doc drift, and fix `index.html` metadata so the next game starts from a clean template (Est: 1.0h)
+  1. ✅ Add shared `GamePageLayout` (PageContainer + "🏠 На главную" link) and use it in both game pages; `CoinsShuffler` no longer renders its own `PageContainer`; TextEncoder polyfill moved to `test/setup/jest.setup.ts`
+  2. ✅ Add `npm run typecheck` script; drop non-existent `npm run lint` from agent instruction files (ESLint not configured)
+  3. ✅ Fix doc drift: memory-grid spec level table, duplicate CHANGELOG `### Added`, wrong "up to 5x7" claim, README paths, obsolete SETUP-TEST-001
+  4. ✅ `index.html`: `lang="ru"` and replace missing `/vite.svg` favicon with an inline emoji favicon
 
 ## Deployment & CI/CD
 

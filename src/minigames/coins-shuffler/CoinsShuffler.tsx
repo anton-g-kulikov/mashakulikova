@@ -3,7 +3,7 @@ import { getInitialState, moveCoin } from "./logic";
 import { GameBoard } from "./GameBoard";
 import { Legend } from "./Legend";
 import { LEVELS, SlotId } from "./levels";
-import { PageContainer, Heading, Button, Card } from "../../components";
+import { Heading, Button, Card } from "../../components";
 import { theme } from "../../theme";
 
 export const CoinsShuffler: React.FC = () => {
@@ -158,7 +158,15 @@ export const CoinsShuffler: React.FC = () => {
   ]);
 
   return (
-    <PageContainer className="coins-shuffler">
+    <div
+      className="coins-shuffler"
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <Heading>Пятнашки с монетами</Heading>
       <Heading level={2}>{currentLevelConfig.name}</Heading>
 
@@ -287,6 +295,6 @@ export const CoinsShuffler: React.FC = () => {
           </div>
         </div>
       )}
-    </PageContainer>
+    </div>
   );
 };

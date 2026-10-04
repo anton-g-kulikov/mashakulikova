@@ -1,7 +1,4 @@
 import React from "react";
-import { TextEncoder, TextDecoder } from "util";
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder as any;
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Home } from "../../src/pages/Home";

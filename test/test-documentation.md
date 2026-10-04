@@ -9,10 +9,10 @@
 
 ### SETUP-TEST-001: Verify project setup
 
-- **Status**: 📋 NOT STARTED
-- **Description**: Verify that metacoding setup is working correctly
-- **Expected**: All configuration files are present and valid
-- **Test File**: `test/setup.test.js`
+- **Status**: ✅ COMPLETED
+- **Description**: Verify that the project installs, typechecks, tests and builds
+- **Expected**: `npm ci`, `npm run typecheck`, `npm test` and `npm run build` all succeed
+- **Test File**: N/A (verified by running the commands; CI runs `npm run build`)
 
 ### DOC-TEST-001: Verify README.md existence and basic content
 
@@ -367,6 +367,26 @@
 - **Description**: Verify that the PageContainer provides the correct layout and background
 - **Expected**: Renders children within a styled div with theme background and font
 - **Test File**: `test/unit/components/PageContainer.test.tsx`
+
+### UI-TEST-010: GamePageLayout Component
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify the shared layout used by every mini-game page
+- **Expected**:
+  - Renders children inside a themed `PageContainer` (background `rgb(253, 242, 248)`)
+  - Renders a "🏠 На главную" link pointing to `/`, styled with `theme.colors.primary`
+  - Link appears before the game content in document order
+- **Test File**: `test/unit/components/GamePageLayout.test.tsx`
+
+### UI-TEST-011: Game pages use shared layout
+
+- **Status**: ✅ COMPLETED
+- **Description**: Verify `CoinsShufflerPage` and `MemoryGridPage` render through `GamePageLayout` with exactly one themed page container
+- **Expected**:
+  - Each page shows exactly one "На главную" link to `/`
+  - Each page has exactly one themed page container (no nested `PageContainer` inside Coins Shuffler)
+  - Each page sets its localized document title («Пятнашки с монетами», «Запоминалка 🧠»)
+- **Test File**: `test/integration/game-pages.test.tsx`
 
 ### UI-TEST-007: Mobile Layout Centering
 
