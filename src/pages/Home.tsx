@@ -46,6 +46,17 @@ export const Home: React.FC = () => {
           </li>
           <li style={{ width: "100%" }}>
             <Button
+              as={Link}
+              to="/multiplication"
+              size="lg"
+              variant="secondary"
+              style={{ display: "block", width: "100%" }}
+            >
+              ✖️ Умножайка
+            </Button>
+          </li>
+          <li style={{ width: "100%" }}>
+            <Button
               as="a"
               href="/august2025/presentation.html"
               size="lg"

@@ -11,3 +11,40 @@ body {
   width: 100%;
   min-height: 100vh;
 }
+
+/* Multiplication trainer */
+@keyframes mult-pop {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes mult-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.mult-pop {
+  animation: mult-pop 0.25s ease-out;
+}
+
+.mult-highlight {
+  animation: mult-pulse 0.9s ease-in-out 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mult-pop,
+  .mult-highlight {
+    animation: none;
+  }
+}

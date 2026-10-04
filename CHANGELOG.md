@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- New mini-game: **Умножайка** (Multiplication Trainer), route `/multiplication`.
+  - 9×9 mastery table: each cell shows the result and turns from red to green as correct answers add up (10 correct = mastered); `7×8` and `8×7` share progress.
+  - Four exercise types: «Сколько будет?», «Найди множитель», «Верно или нет?», «Что больше?».
+  - Adaptive practice: starts with easy facts (×1, ×2, ×5, 3×3, 4×4), gradually mixes in medium and hard ones, and asks poorly known facts more often, with a cooldown so the same fact doesn't repeat back-to-back.
+  - Plausible wrong options (neighbouring results like 49 / 56 / 63 for 7×8).
+  - No lives: wrong answers show the correct fact and wait for «Дальше».
+  - 20-question sessions with a summary of improved facts and the updated table.
+  - Progress saved in the browser after every answer.
 - **Shared `GamePageLayout`**: every mini-game page now uses one layout (themed page + "🏠 На главную" link), giving new games a ready template.
 - **`npm run typecheck`** script; `npm run build` now runs it first.
 - **Deployment**: Added GitHub Pages-compatible SPA fallback (history rewrite script + `public/404.html`) so deep links like `/memory-grid` load without 404s.

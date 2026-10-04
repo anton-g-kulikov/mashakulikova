@@ -15,6 +15,7 @@ describe("Home Page", () => {
 
     const puzzleButton = screen.getByText(/Головоломка/i);
     const memoryButton = screen.getByText(/Запоминалка/i);
+    const multiplicationButton = screen.getByText(/Умножайка/i);
     const presentationButton = screen.getByText(/Август 2025/i);
 
     // Mini-games should be green (secondary)
@@ -24,6 +25,10 @@ describe("Home Page", () => {
     expect(memoryButton).toHaveStyle({
       backgroundColor: theme.colors.secondary,
     });
+    expect(multiplicationButton).toHaveStyle({
+      backgroundColor: theme.colors.secondary,
+    });
+    expect(multiplicationButton).toHaveAttribute("href", "/multiplication");
 
     // Presentation should be pink (primary)
     expect(presentationButton).toHaveStyle({

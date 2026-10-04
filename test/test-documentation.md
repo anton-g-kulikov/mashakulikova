@@ -345,6 +345,117 @@
 | UI-INT-003   | Tap-to-select interactions still work with scrolling enabled          | Integration | Not Started |
 | UI-INT-004   | August 2025 presentation shows "На главную" link that returns to home | Integration | Not Started |
 
+## Multiplication Trainer Test Cases
+
+Spec: `minigames/multiplication-trainer/multiplication-trainer.md`. All randomness is injected via a seeded `rng`, so these tests are deterministic.
+
+### MULT-TEST-001: Fact catalog and difficulty
+
+- **Status**: ✅ COMPLETED
+- **Expected**:
+  - 45 unique facts, each normalized `a <= b`, `result = a × b`
+  - `factId(8, 7) === factId(7, 8)`
+  - Difficulty counts: 26 easy, 13 medium, 6 hard
+  - Easy: `1×8`, `2×7`, `5×9`, `3×3`, `4×4`; Medium: `3×7`, `4×6`, `4×8`, `6×9`, `7×9`; Hard: `6×6`, `6×7`, `6×8`, `7×7`, `7×8`, `8×8`
+- **Test File**: `test/unit/multiplication/facts.test.ts`
+
+### MULT-TEST-002: Mastery levels
+
+- **Status**: ✅ COMPLETED
+- **Expected**: correctCount 0 → level 0; 1, 3 → 1; 4, 6 → 2; 7, 9 → 3; 10, 15 → 4. Five distinct colors, one per level.
+- **Test File**: `test/unit/multiplication/facts.test.ts`
+
+### MULT-TEST-003: Recording answers
+
+- **Status**: ✅ COMPLETED
+- **Expected**:
+  - Correct answer increments `correctCount`; wrong increments `incorrectCount` and never lowers `correctCount`
+  - Recording several facts at once (comparison) updates each of them
+  - `lastAskedAt` set to the current question counter; counter increments by 1 per question
+  - Original state object is not mutated
+- **Test File**: `test/unit/multiplication/progress.test.ts`
+
+### MULT-TEST-004: Progress persistence
+
+- **Status**: ✅ COMPLETED
+- **Expected**:
+  - Save then load returns equal progress (key `multiplication-trainer:v1`)
+  - Missing key, corrupt JSON or wrong version → empty progress
+  - Invalid fact entries (negative/non-numeric counts, unknown ids) are dropped
+  - A storage that throws on read/write does not crash
+- **Test File**: `test/unit/multiplication/progress.test.ts`
+
+### MULT-TEST-005: Distractors
+
+- **Status**: ✅ COMPLETED
+- **Expected**:
+  - `7×8` result distractors come from the same-table neighbours `{48, 49, 63, 64}`
+  - For every fact and many seeds: 2 distractors, positive, unique, ≠ result, within 20 of the result
+  - Factor distractors: unique, within 1..9, ≠ the missing factor, close to it (±3)
+- **Test File**: `test/unit/multiplication/distractors.test.ts`
+
+### MULT-TEST-006: Stage computation
+
+- **Status**: ✅ COMPLETED
+- **Expected**: empty → 1; 4 strong easy → 1; 5 → 2; 13 → 3; 21 → 4; 21 easy + 11 medium strong → 5. "Strong" = correctCount ≥ 7.
+- **Test File**: `test/unit/multiplication/selection.test.ts`
+
+### MULT-TEST-007: Adaptive selection
+
+- **Status**: ✅ COMPLETED
+- **Expected**:
+  - Stage 1: 500 picks are all easy
+  - Stage 4: picks include all three tiers
+  - Unseen fact is picked more often than a mastered one, but the mastered one still appears (maintenance)
+  - Facts wrong in this session are picked more often than otherwise identical facts
+  - Facts asked within the last 4 questions are never picked while alternatives exist; cooldown relaxes if every candidate is cooling down
+- **Test File**: `test/unit/multiplication/selection.test.ts`
+
+### MULT-TEST-008: Question generation
+
+- **Status**: ✅ COMPLETED
+- **Expected**:
+  - Missing factor / missing result: 3 unique options, answer among them, prompt `a × ? = r` / `a × b = ?`, factor order varies
+  - True/False: options `Верно`/`Неверно`; both true and false statements occur; false values are plausible distractors
+  - Compare: two different facts, answer matches `<`/`=`/`>` of the results, equal pairs occur, both fact ids attached
+  - `reveal` shows the full correct fact(s); `isCorrect` checks the choice
+- **Test File**: `test/unit/multiplication/questions.test.ts`
+
+### MULT-TEST-009: Session logic
+
+- **Status**: ✅ COMPLETED
+- **Expected**:
+  - Session ends after 20 answers
+  - Correct-answer count tracked; progress updated after every answer
+  - Comparison credits both facts
+  - Wrong answers add the fact(s) to the session's boost list
+  - `improvedFacts` lists facts whose correctCount rose, flagging color (level) changes
+- **Test File**: `test/unit/multiplication/session.test.ts`
+
+### MULT-TEST-010: Mastery table UI
+
+- **Status**: ✅ COMPLETED
+- **Expected**: 81 cells with results; `7×8` and `8×7` share the same color; colors follow mastery level; header 1..9 on both axes; highlighted cells marked; legend shows 5 levels
+- **Test File**: `test/unit/multiplication/MasteryTable.test.tsx`
+
+### MULT-TEST-011: Trainer flow
+
+- **Status**: ✅ COMPLETED
+- **Expected**:
+  - Menu shows the table and 4 game buttons
+  - Starting a game shows `1 / 20`
+  - Correct answer: positive feedback, progress saved to localStorage, auto-advance to `2 / 20`
+  - Wrong answer: correct fact revealed, «Дальше» button advances; no lives
+  - After 20 answers: summary with correct count, improved facts and table; «Ещё раз» restarts, «К таблице» returns to menu
+  - Progress survives remount
+- **Test File**: `test/integration/multiplication-flow.test.tsx`
+
+### MULT-TEST-012: Navigation and title
+
+- **Status**: ✅ COMPLETED
+- **Expected**: Home has a green «✖️ Умножайка» link to `/multiplication`; page uses `GamePageLayout` and sets title «Умножайка ✖️»
+- **Test File**: `test/integration/home-ui.test.tsx`, `test/integration/game-pages.test.tsx`
+
 ## Shared UI Components Test Cases
 
 ### UI-TEST-001: Button Component

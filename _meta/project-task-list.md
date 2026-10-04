@@ -80,6 +80,21 @@
 - [x] **MEMORY-TASK-009: Show error count in final dialogue** - ✅ **COMPLETED** - Track total errors (out-of-order and empty clicks) and display them in the result modal
 - [x] **MEMORY-TASK-010: Increase UI sizes for mobile** - ✅ **COMPLETED** - Scale up grid cells, font sizes, and buttons for better visibility on iPhone screens
 
+## Multiplication Trainer Mini-Game
+
+Spec: `minigames/multiplication-trainer/multiplication-trainer.md`
+
+- [x] **MULT-TASK-001: Fact catalog and difficulty config** - ✅ **COMPLETED** - 45 normalized facts (`a <= b`), difficulty rules as data, mastery level/color buckets
+- [x] **MULT-TASK-002: Progress persistence** - ✅ **COMPLETED** - Versioned localStorage load/save with safe fallback
+- [x] **MULT-TASK-003: Answer/distractor generation** - ✅ **COMPLETED** - Plausible distractors for results and factors; equal-pair generation for comparisons
+- [x] **MULT-TASK-004: Stages and adaptive selection** - ✅ **COMPLETED** - Stage computation, tier quotas, need weights, error boost, cooldown, injectable RNG
+- [x] **MULT-TASK-005: Question generators for 4 exercise types** - ✅ **COMPLETED** - Missing factor, missing result, true/false, which is bigger; answer checking and mastery credit
+- [x] **MULT-TASK-006: Session logic** - ✅ **COMPLETED** - 20-question session state, per-answer save, improved-facts summary
+- [x] **MULT-TASK-007: Mastery table UI** - ✅ **COMPLETED** - 9×9 table with headers, mirrored colors, legend, fits 375px width
+- [x] **MULT-TASK-008: Question and feedback UI** - ✅ **COMPLETED** - Progress counter, answer buttons, correct animation + auto-advance, wrong-answer reveal
+- [x] **MULT-TASK-009: Summary screen** - ✅ **COMPLETED** - Score, improved facts, highlighted table, replay/back buttons
+- [x] **MULT-TASK-010: Route, Home button, title, docs** - ✅ **COMPLETED** - `/multiplication` route via `GamePageLayout`, Home entry, document title, README/CHANGELOG
+
 ## Project Structure & Navigation
 
 - [x] **CORE-TASK-001: Implement routing and landing page** - ✅ **COMPLETED** - Set up react-router-dom, created Home page with links, and moved Coins Shuffler to its own route

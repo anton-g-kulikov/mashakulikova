@@ -3,11 +3,13 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { CoinsShufflerPage } from "../../src/pages/CoinsShufflerPage";
 import { MemoryGridPage } from "../../src/pages/MemoryGridPage";
+import { MultiplicationPage } from "../../src/pages/MultiplicationPage";
 import "@testing-library/jest-dom";
 
 const pages = [
   { name: "CoinsShufflerPage", Page: CoinsShufflerPage, title: "Пятнашки с монетами" },
   { name: "MemoryGridPage", Page: MemoryGridPage, title: "Запоминалка 🧠" },
+  { name: "MultiplicationPage", Page: MultiplicationPage, title: "Умножайка ✖️" },
 ];
 
 describe.each(pages)("$name", ({ Page, title }) => {

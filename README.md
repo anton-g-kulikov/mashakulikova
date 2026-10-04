@@ -15,6 +15,7 @@ A collection of mini-projects for Masha.
   - `minigames/`: One folder per game (`levels.ts`, `logic.ts`, view components).
     - **Coins Shuffler** (Головоломка): A puzzle game where you swap blue and green coins.
     - **Memory Grid** (Запоминалка): A memory-based number sequencing game.
+    - **Multiplication Trainer** (Умножайка): Adaptive practice that turns a 9×9 table from red to green.
   - `pages/`: Route-level pages wrapping each game.
   - `theme/`: Colors, fonts, spacing.
 - `minigames/`: Game design specs and reference images.
